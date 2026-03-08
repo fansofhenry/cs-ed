@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing — Henry Fan</title>
+  <meta name="description" content="Research statement, annotated reading list, and working papers on help-seeking suppression and structural equity in CS education.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Henry Fan</a>
+    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="writing.html" class="active">Writing</a></li>
+      <li><a href="tools.html">Prototypes</a></li>
+      <li><a href="background.html">Background</a></li>
+      <li><a href="cv.pdf">CV</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-container">
+  <div class="page-header">
+    <p class="label">Writing</p>
+    <h1>Papers, Statements, and Reading</h1>
+    <p class="subtitle">
+      Research statements, working papers, and an annotated reading list that maps the intellectual territory this work occupies. Finished publications will appear here as they are accepted.
+    </p>
+  </div>
+
+  <!-- Research Statement -->
+  <div class="writing-item">
+    <p class="writing-type">Research Statement · March 2026</p>
+    <p class="writing-title">Structural Predictors of Help-Seeking and Departure in Introductory CS: A Research Program for Community Colleges</p>
+    <p class="writing-desc">
+      A formal statement of my research agenda, written for PhD applications. Covers the problem space (structural equity in introductory CS), four research questions, theoretical grounding (Seymour &amp; Hunter, Harel, Walton &amp; Brady), methodological approach (mixed-methods: qualitative interviews + learning analytics + NLP), and why this work requires doctoral training.
+    </p>
+    <p class="mt-sm"><a href="research-statement.pdf">Read the research statement (PDF) →</a></p>
+  </div>
+
+  <!-- Literature Synthesis -->
+  <div class="writing-item">
+    <p class="writing-type">Working Paper · In Progress</p>
+    <p class="writing-title">Help-Seeking Suppression in CS Education: A Literature Synthesis</p>
+    <p class="writing-desc">
+      A synthesis of the existing literature on help-seeking behavior in introductory CS, organized around three themes: structural predictors (course design features that suppress help-seeking), measurement approaches (how help-seeking has been operationalized in learning analytics research), and equity dimensions (how help-seeking patterns differ across demographic groups). Draws on Seymour &amp; Hunter, Newman (2002), Karabenick &amp; Berger, Ryan &amp; Pintrich, and recent SIGCSE/ICER papers on LMS behavioral analysis. Draft in preparation — targeting 3,000–4,000 words.
+    </p>
+    <p class="font-sans text-small text-muted mt-sm">Expected: Spring 2026</p>
+  </div>
+
+  <!-- Methods Reflection -->
+  <div class="writing-item">
+    <p class="writing-type">Methods Note · In Progress</p>
+    <p class="writing-title">Why Mixed Methods: Combining Qualitative Interviews with Computational Analysis in CS Education Research</p>
+    <p class="writing-desc">
+      A short reflection on the methodological design of this research program — specifically, why I believe computational analysis of course materials and LMS data must be grounded in qualitative interview studies rather than pursued independently. The argument: NLP features for detecting help-seeking suppression are only meaningful if the construct itself has been validated through interviews with actual students. This is why P3 (interviews) precedes P1 (learning analytics) in my execution timeline. The note engages with debates about mixed-methods research in CS education (Margulieux et al., 2019) and learning analytics (Wise &amp; Shaffer, 2015).
+    </p>
+    <p class="font-sans text-small text-muted mt-sm">Expected: Spring 2026</p>
+  </div>
+
+  <hr>
+
+  <h2>Annotated Reading List</h2>
+
+  <p>
+    Key papers and books that shape this research program. Annotations describe what each contributes to my thinking — not just what it says, but how it informs specific research questions.
+  </p>
+
+  <h3>Foundations: STEM Departure and Structural Equity</h3>
+
+  <div class="writing-item">
+    <p class="writing-title">Seymour, E., &amp; Hunter, A.-B. (2019). <em>Talking About Leaving Revisited.</em> Springer.</p>
+    <p class="writing-desc">
+      The empirical foundation for this entire research program. Seymour and Hunter's central finding — that students who leave STEM are not academically weaker than those who stay, and that departure correlates with teaching quality and institutional culture — motivates every project on this site. Their taxonomy of departure reasons (weed-out culture, help-seeking suppression, belonging threats) provides the deductive coding framework for P3 and the feature selection rationale for P1. The key open question for my work: their studies were conducted at research universities. Do the findings replicate at community colleges?
+    </p>
+  </div>
+
+  <div class="writing-item">
+    <p class="writing-title">Margolis, J., &amp; Fisher, A. (2002). <em>Unlocking the Clubhouse: Women in Computing.</em> MIT Press.</p>
+    <p class="writing-desc">
+      Foundational qualitative work on how CS culture systematically excludes students who don't match the "geek mythology" profile. Margolis and Fisher's analysis of how belonging is structurally communicated (or denied) through course design, peer culture, and institutional signals directly informs P5's coding scheme for belonging signals in course materials. Their methodological approach — in-depth interviews combined with institutional analysis — is a model for P3.
+    </p>
+  </div>
+
+  <div class="writing-item">
+    <p class="writing-title">Walton, G. M., &amp; Brady, S. T. (2017). The many questions of belonging. In <em>Handbook of Competence and Motivation</em> (2nd ed.). Guilford Press.</p>
+    <p class="writing-desc">
+      Walton and Brady distinguish interpersonal belonging (do I have friends here?) from structural belonging (does this institution signal that people like me are expected to succeed?). This distinction is critical for my work — P5 specifically measures structural belonging features that are visible in course materials, not interpersonal dynamics that require observational methods. The Walton 3-item belonging scale is the validation target for P5.
+    </p>
+  </div>
+
+  <h3>Learning Analytics and Help-Seeking</h3>
+
+  <div class="writing-item">
+    <p class="writing-title">Karabenick, S. A., &amp; Berger, J.-L. (2013). Help seeking as a self-regulated learning strategy. In <em>Applications of Self-Regulated Learning.</em></p>
+    <p class="writing-desc">
+      Establishes help-seeking as a self-regulated learning strategy rather than a sign of weakness — a framing that matters for P1. Karabenick and Berger's framework distinguishes adaptive help-seeking (seeking understanding) from executive help-seeking (seeking answers). P1's NLP classification of discussion forum posts attempts to operationalize this distinction computationally.
+    </p>
+  </div>
+
+  <div class="writing-item">
+    <p class="writing-title">Wise, A. F., &amp; Shaffer, D. W. (2015). Why theory matters more than ever in the age of big data. <em>JLAC, 2</em>(2).</p>
+    <p class="writing-desc">
+      A crucial methodological argument: learning analytics without theoretical grounding produces features that are predictive but not actionable. This paper is the reason P3 (qualitative interviews) precedes P1 (learning analytics) in my timeline. The features I extract from LMS data must be interpretable through the theoretical lens that P3's interviews establish. Wise and Shaffer's critique directly shapes my methods note on mixed-methods design.
+    </p>
+  </div>
+
+  <h3>Curriculum Design and Necessity</h3>
+
+  <div class="writing-item">
+    <p class="writing-title">Harel, G. (1998). Two dual assertions: The first on learning and the second on teaching. <em>AMM, 105</em>(6).</p>
+    <p class="writing-desc">
+      The necessity principle: students must experience intellectual need before receiving the tool that addresses it. Harel's formulation for mathematics ("if math is the medicine, what is the headache?") generalizes to CS education. P2's annotation scheme for "motivational debt" is a direct operationalization of necessity principle violations — moments where courses introduce formalism before students have experienced the problem the formalism solves.
+    </p>
+  </div>
+
+  <div class="writing-item">
+    <p class="writing-title">Anderson, J. Applied Linear Algebra Fundamentals. (Textbook and twelve modeling criteria.)</p>
+    <p class="writing-desc">
+      Jeff Anderson's textbook and teaching practice are the existence proof that the necessity principle works at scale. His twelve modeling criteria for curriculum design provide the practical grounding for P4's graph-based curriculum analysis. This work showed me that the problem is solvable — that you can design curriculum around student need rather than disciplinary convention — and that solving it is worth a career.
+    </p>
+  </div>
+
+  <h3>CS Education Research Methods</h3>
+
+  <div class="writing-item">
+    <p class="writing-title">Margulieux, L. E., et al. (2019). When and how to guide CS students. <em>ICER '19.</em></p>
+    <p class="writing-desc">
+      Important for my understanding of when instructional scaffolding helps versus hinders CS students — directly relevant to P2's annotation scheme, which attempts to measure scaffolding regularity in course materials. Also informs my thinking about how much structure is optimal versus excessive.
+    </p>
+  </div>
+
+  <div class="writing-item">
+    <p class="writing-title">SEISMIC Consortium. (Ongoing). Large-scale equity analysis of STEM education.</p>
+    <p class="writing-desc">
+      Multi-institutional dataset and methodology for studying equity in STEM at scale. Relevant to P1's learning analytics approach and to the eventual scaling of this work beyond a single institution. The SEISMIC approach of combining institutional data with equity analysis is a model for what I hope P1 can contribute at the community college level.
+    </p>
+  </div>
+
+  <p class="font-sans text-small text-muted mt-xl">
+    This list is not comprehensive — it reflects the works that most directly shape active projects. A fuller bibliography is available in each project's research design.
+  </p>
+
+  <p class="font-sans text-small text-muted">Last updated: March 2026</p>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+</footer>
+
+</body>
+</html>

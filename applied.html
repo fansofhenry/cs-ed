@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applied Work — Henry Fan</title>
+  <meta name="description" content="Research-informed product design: ProjectBridge, a project-based learning platform for community colleges.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Henry Fan</a>
+    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="tools.html">Prototypes</a></li>
+      <li><a href="background.html">Background</a></li>
+      <li><a href="cv.pdf">CV</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-container">
+  <div class="page-header">
+    <p class="label">Applied Work</p>
+    <h1>Research-Informed Design</h1>
+    <p class="subtitle">
+      The research agenda studies structural barriers. This work tries to build structures that reduce them. These are not research projects — they are design artifacts informed by the same principles the research investigates.
+    </p>
+  </div>
+
+  <h2 class="mt-0">ProjectBridge</h2>
+
+  <p>
+    ProjectBridge is a platform design for project-based learning at community colleges. It grew out of the same institutional experience that motivates the research: watching students struggle to find meaningful project opportunities, build teams across disciplines, and document work in ways that translate to portfolios and careers.
+  </p>
+
+  <p>
+    The original prototype (StemBridge) was built for Foothill College. I conducted a full product evaluation and redesign, producing a strategy document that covers platform architecture, data models, accountability systems, AI integration, faculty adoption, and a phased scaling strategy from one classroom to a multi-college network.
+  </p>
+
+  <h3>What the redesign demonstrates</h3>
+
+  <p>
+    <strong>Systems thinking grounded in research.</strong> The accountability features (weekly check-ins, milestone tracking, the 30-Day Pulse Check) are designed around what the help-seeking and persistence literature suggests works: gentle positive pressure, visible progress, and normalized iteration. The "Build Journal" feature is directly inspired by the portfolio evidence model that P1 and P3 aim to validate.
+  </p>
+
+  <p>
+    <strong>Data modeling for learning analytics.</strong> The redesign includes complete PostgreSQL data models for users, projects, milestones, updates, collaborator requests, and wanted ads — each designed to capture the kinds of behavioral signals (update frequency, team composition, milestone completion patterns) that the learning analytics work in P1 could eventually analyze.
+  </p>
+
+  <p>
+    <strong>Equity-centered design.</strong> The platform integrates directly with existing learning communities (MESA, Puente, Umoja, ETI) rather than creating a separate silo. The "Collaborator Marketplace" is designed to surface cross-disciplinary connections — the same structural bridges that the research argues are systematically undersupplied at community colleges.
+  </p>
+
+  <p>
+    <strong>Scaling strategy.</strong> The phased approach — one classroom, one college, multi-college, platform network — mirrors the research strategy of establishing findings locally before generalizing. Each phase has specific success metrics tied to the platform's equity goals.
+  </p>
+
+  <h3>Key design artifacts</h3>
+
+  <p>
+    The full redesign document includes: candid evaluation of the original prototype (five dimensions, rated honestly), proposed product vision and design principles, complete page architecture (12 pages, each mapped to a user need), six data models with field-level specifications, accountability feature designs, AI integration strategy (using the Anthropic API, starting with low-risk documentation tools), faculty adoption playbook, and a 20-week phased product roadmap.
+  </p>
+
+  <hr>
+
+  <h2>Connection to the Research</h2>
+
+  <p>
+    ProjectBridge is not a research project, but it is deeply informed by the research program. The accountability features operationalize ideas from the persistence literature. The data models are designed to capture signals the learning analytics work would analyze. The faculty adoption strategy reflects what the qualitative research on institutional change suggests about how educational tools actually get used.
+  </p>
+
+  <p>
+    Including this work here serves a specific purpose: it demonstrates that the research agenda isn't purely theoretical. The structural equity questions I'm studying have direct implications for how we design educational tools, and I'm interested in closing that loop — using research to inform design, and using design contexts to generate research questions.
+  </p>
+
+  <p class="font-sans text-small text-muted mt-xl">Last updated: March 2026</p>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+</footer>
+
+</body>
+</html>
