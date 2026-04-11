@@ -3,19 +3,21 @@
    Academic editorial design system
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=DM+Sans:wght@400;500;600&display=swap');
 
 :root {
   --color-text: #1c1c1c;
-  --color-text-secondary: #4a4a4a;
-  --color-text-muted: #717171;
+  --color-text-secondary: #434343;
+  --color-text-muted: #5e5e5e;
   --color-accent: #2c4a6e;
   --color-accent-light: #3a6b9f;
+  --color-accent-soft: #e8eef5;
   --color-bg: #fafaf8;
   --color-bg-alt: #f2f1ed;
   --color-border: #d8d6d0;
   --color-border-light: #e8e6e2;
   --color-white: #ffffff;
+  --color-focus: #3a6b9f;
   --font-serif: 'Newsreader', 'Georgia', serif;
   --font-sans: 'DM Sans', 'Helvetica Neue', sans-serif;
   --max-width: 720px;
@@ -48,6 +50,50 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- Accessibility primitives ---- */
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  background: var(--color-text);
+  color: var(--color-white);
+  padding: 0.5rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 2px;
+  z-index: 1000;
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+  color: var(--color-white);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+a:focus-visible {
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ---- Navigation ---- */
@@ -126,6 +172,17 @@ body {
   .site-nav .nav-links.open {
     display: flex;
   }
+  /* No-JS fallback: if the toggle never gets enhanced with aria-expanded,
+     show the nav by default so keyboard users can always reach it. */
+  .nav-toggle:not([aria-expanded]) + .nav-links {
+    display: flex;
+  }
+}
+
+.site-nav .nav-links a[aria-current="page"],
+.site-nav .nav-links a.active {
+  color: var(--color-accent);
+  font-weight: 600;
 }
 
 /* ---- Layout ---- */
@@ -632,10 +689,198 @@ details .detail-content {
   white-space: nowrap;
 }
 
+/* ---- Helpers extracted from inline styles ---- */
+
+.column-heading {
+  margin-top: 0;
+}
+
+.column-body {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+
+.column-link {
+  font-size: 0.88rem;
+}
+
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-link .card {
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.card-link:hover .card,
+.card-link:focus-visible .card {
+  border-color: var(--color-accent);
+}
+
+.card-link:focus-visible {
+  outline: none;
+}
+
+.card-link:focus-visible .card {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.card--accent {
+  border-left: 3px solid var(--color-accent);
+}
+
+.card--highlight {
+  border-color: var(--color-accent);
+}
+
+.card-title--lg {
+  font-size: 1.3rem !important;
+}
+
+.card-title--md {
+  font-size: 1.2rem !important;
+}
+
+.detail-grid--wide {
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+.callout {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  padding: var(--space-lg);
+  font-size: 0.92rem;
+  margin-bottom: var(--space-2xl);
+}
+
+.contact-clone {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.contact-clone code {
+  background: var(--color-bg);
+  padding: 0.15rem 0.35rem;
+  font-size: 0.78rem;
+}
+
+.footer-sub {
+  margin-top: 0.5rem;
+}
+
+/* ---- Research-at-a-glance grid (homepage) ---- */
+
+.glance {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-lg);
+}
+
+.glance-cell {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  padding-right: var(--space-md);
+}
+
+.glance-cell .glance-tag {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.glance-cell strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .glance {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Reading list scannability ---- */
+
+.reading-index {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  padding: var(--space-lg);
+  margin: var(--space-lg) 0 var(--space-2xl);
+}
+
+.reading-index ol {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-sm) 0 0;
+  counter-reset: readidx;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem 1rem;
+}
+
+@media (max-width: 640px) {
+  .reading-index ol {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reading-index li {
+  counter-increment: readidx;
+  padding-left: 1.75rem;
+  position: relative;
+}
+
+.reading-index li::before {
+  content: counter(readidx);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 600;
+  color: var(--color-accent);
+  width: 1.4rem;
+  text-align: right;
+}
+
+.reading-index a {
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.reading-index a:hover,
+.reading-index a:focus-visible {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.reading-category {
+  scroll-margin-top: 5rem;
+}
+
 /* ---- Print ---- */
 
 @media print {
-  .site-nav, .nav-toggle { display: none; }
+  .site-nav, .nav-toggle, .skip-link { display: none; }
   body { font-size: 11pt; }
   .page-container { max-width: none; padding: 0; }
+  a { color: var(--color-text); }
+  a::after { content: ""; }
 }
