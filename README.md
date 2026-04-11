@@ -23,14 +23,14 @@ Structural features of introductory CS courses that predict help-seeking, persis
 | `style.css` | Shared editorial stylesheet |
 | `script.js` | Progressive enhancement for mobile nav + active-page highlighting |
 
-## PDFs referenced by the site
+## Document status
 
-- `project1_curriculum_grammar.pdf` — Typed Dependency Grammar paper
-- `project2_pedagogical_debt.pdf` — Pedagogical Debt paper
-- `project3_mvc.pdf` — Minimum Viable Curriculum paper
-- `cv.pdf` — Curriculum vitae
-- `research-statement.pdf` — Formal research statement
-- `teaching-philosophy.pdf` — Teaching philosophy
+The research statement, teaching philosophy, CV, and the three working papers
+(Typed Dependency Grammar, Pedagogical Debt, Minimum Viable Curriculum) are
+all drafts in preparation. They are not published from this repository —
+the site marks them as "draft · available on request" and points to
+`henry@henryfan.org`. Don't re-add PDF links until the documents are
+finalized and committed.
 
 ## Local preview
 

@@ -19,7 +19,8 @@
   <meta name="twitter:description" content="Proof-of-concept research tools: curriculum dependency visualization, pedagogical debt analysis, minimum viable curriculum.">
 
   <meta name="author" content="Henry Fan">
-  <meta name="theme-color" content="#2c4a6e">
+  <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,9 +38,9 @@
       <li><a href="projects.html">Projects</a></li>
       <li><a href="teaching.html">Teaching</a></li>
       <li><a href="writing.html">Writing</a></li>
-      <li><a href="tools.html" class="active">Prototypes</a></li>
+      <li><a href="tools.html" class="active">Tools</a></li>
+      <li><a href="applied.html">Applied</a></li>
       <li><a href="background.html">Background</a></li>
-      <li><a href="cv.pdf">CV</a></li>
     </ul>
   </div>
 </nav>
@@ -65,7 +66,7 @@
       An interactive graph representation of a synthetic introductory linear algebra curriculum using a typed dependency grammar. Each node is a learning objective; each edge encodes one of four dependency types (conceptual, procedural, motivational, social). The empirical question in P4 is whether real instructor-annotated graphs show structural patterns that predict student outcomes — this prototype shows what such a graph looks like and what structural statistics it produces.
     </p>
     <p class="card-desc mt-md">
-      <a href="project1_curriculum_grammar.pdf">Read the technical paper (PDF) →</a>
+      <span class="doc-status">Working paper · draft in preparation</span>
     </p>
   </div>
 
@@ -77,7 +78,7 @@
       A text-input tool that scores course descriptions and syllabus excerpts for motivational, scaffolding, and verification structure using heuristics grounded in Harel's necessity principle. Users paste course material and receive a structural analysis across four dimensions. These are heuristic scores based on keyword patterns and structural rules — P2 is the project to validate whether they correlate with expert annotation and student outcomes.
     </p>
     <p class="card-desc mt-md">
-      <a href="project2_pedagogical_debt.pdf">Read the technical paper (PDF) →</a>
+      <span class="doc-status">Working paper · draft in preparation</span>
     </p>
   </div>
 
@@ -89,7 +90,7 @@
       A step-through visualization of a greedy approximation algorithm for the Minimum Viable Curriculum (MVC) problem on a synthetic curriculum graph. The key theoretical result: finding the optimal MVC is NP-complete (polynomial reduction from Set Cover). This visualizer illustrates the algorithm on a small example. The research question in P4 is whether MVC-distance — how far a real curriculum is from its minimum viable form — predicts student outcomes.
     </p>
     <p class="card-desc mt-md">
-      <a href="project3_mvc.pdf">Read the technical paper (PDF) →</a>
+      <span class="doc-status">Working paper · draft in preparation</span>
     </p>
   </div>
 
@@ -133,25 +134,9 @@
 
   <h2>Platform Design</h2>
 
-  <div class="card card--accent">
-    <p class="card-label">Next.js 14 · TypeScript · Supabase · Tailwind CSS · Deployed</p>
-    <p class="card-title">ProjectBridge: A Project-Based Learning Platform for Community Colleges</p>
-    <p class="card-desc">
-      A campus-wide platform where students discover, join, lead, and document meaningful projects — turning their college experience into a portfolio of real work. Designed with first-generation community college students as the primary user.
-    </p>
-    <p class="card-desc mt-sm">
-      Core features: project directory with search and filtering, collaborator marketplace with wanted ads, build journals for public project documentation, milestone tracking with celebration moments, weekly check-in system, 30-day pulse check automation, student profiles with contribution history, faculty dashboards for class project oversight, and learning community pages for programs like MESA, Puente, and Umoja.
-    </p>
-    <p class="card-desc mt-sm">
-      Design principles: agency first (every interaction makes a student feel more capable), low floor/high ceiling (post a project in under 2 minutes, document a year-long initiative with milestones and portfolio artifacts), show the work (GitHub-inspired public timeline), and survive the semester (projects outlive their creators through the campus archive).
-    </p>
-    <p class="card-desc mt-sm">
-      Built with Next.js 14 (App Router), TypeScript, Tailwind CSS, and Supabase (PostgreSQL + Row Level Security). Mobile-first design. Complete database schema with 8 core models. Deployed on Vercel.
-    </p>
-    <p class="mt-md text-small">
-      Research grounding: the platform operationalizes the same structural equity principles that guide the empirical projects on this site. If sense of belonging is structural (Walton &amp; Brady) and can be designed into platforms (not just classrooms), then a platform that gives students agency, visibility, and community should measurably affect persistence. This is a testable claim.
-    </p>
-  </div>
+  <p>
+    A longer-form design artifact — <strong>ProjectBridge</strong>, a project-based learning platform concept for community colleges — lives on the <a href="applied.html">Applied Work page</a>. It operationalizes the same structural equity principles that guide the research: the accountability features are grounded in the help-seeking literature, the data model is designed to produce the behavioral signals P1 would analyze, and the faculty-adoption strategy reflects what the institutional-change literature suggests about how tools actually get used.
+  </p>
 
   <p class="font-sans text-small text-muted mt-xl">Last updated: March 2026</p>
 </main>
