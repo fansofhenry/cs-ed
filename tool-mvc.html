@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimum Viable Curriculum Visualizer — Henry Fan</title>
+  <meta name="description" content="A step-through visualization of a greedy set-cover approximation for the Minimum Viable Curriculum problem, with brute-force optimum comparison.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/tool-mvc.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Minimum Viable Curriculum Visualizer — Henry Fan">
+  <meta property="og:description" content="A step-through visualization of a greedy set-cover approximation for the Minimum Viable Curriculum problem.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/tool-mvc.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Minimum Viable Curriculum Visualizer — Henry Fan">
+  <meta name="twitter:description" content="A step-through visualization of a greedy set-cover approximation for the Minimum Viable Curriculum problem.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Henry Fan</a>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="tools.html" class="active">Tools</a></li>
+      <li><a href="applied.html">Applied</a></li>
+      <li><a href="background.html">Background</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="page-container wide">
+  <div class="page-header">
+    <p class="label">Interactive Prototype · Project P4</p>
+    <h1>Minimum Viable Curriculum Step-Through</h1>
+    <p class="subtitle">
+      Given a universe of 10 learning objectives and 8 candidate course modules, what is the smallest set of modules that covers every objective? This is the classic Set Cover problem in disguise. Set Cover is NP-complete, so finding the optimum on a real curriculum of hundreds of objectives is intractable — but the greedy approximation runs in near-linear time with a provable ln(n)+1 bound. Press <strong>Play</strong> to watch greedy pick one module at a time; the bar at the right shows the approximation gap against a brute-force optimum.
+    </p>
+  </div>
+
+  <p class="callout">
+    <strong>What this is and isn't.</strong> The instance below is synthetic and small enough that brute force finishes instantly, so you can see greedy side-by-side with the true optimum. In <a href="projects.html#p4">P4</a> the real question is whether <em>MVC-distance</em> — the number of "redundant" modules in an actual curriculum beyond the greedy solution on an instructor-annotated objectives graph — predicts student persistence and grade outcomes. This tool exists to make the algorithmic setup concrete; it does not claim the metric is validated.
+  </p>
+
+  <section class="mvc-surface" aria-label="MVC step-through">
+    <div class="mvc-main">
+      <div class="mvc-controls" role="group" aria-label="Playback controls">
+        <button type="button" id="mvc-play" class="mvc-btn mvc-btn--primary">▶ Play</button>
+        <button type="button" id="mvc-step" class="mvc-btn">Step</button>
+        <button type="button" id="mvc-reset" class="mvc-btn">Reset</button>
+        <label class="mvc-speed">
+          Speed
+          <select id="mvc-speed">
+            <option value="1500">Slow</option>
+            <option value="900" selected>Medium</option>
+            <option value="400">Fast</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="mvc-universe" aria-label="Universe of learning objectives">
+        <p class="mvc-section-title">Universe — 10 learning objectives</p>
+        <div id="mvc-universe-row" class="mvc-universe-row"></div>
+        <p class="mvc-coverage-line">
+          Covered: <span id="mvc-coverage-count">0</span> / 10
+          <span class="mvc-coverage-bar"><span id="mvc-coverage-fill" class="mvc-coverage-fill"></span></span>
+        </p>
+      </div>
+
+      <div class="mvc-sets-wrap">
+        <p class="mvc-section-title">Candidate modules — each is a subset of objectives</p>
+        <ul id="mvc-sets" class="mvc-sets"></ul>
+      </div>
+    </div>
+
+    <aside class="mvc-side" aria-live="polite">
+      <div class="mvc-panel">
+        <p class="mvc-panel-label">Current step</p>
+        <p class="mvc-panel-big" id="mvc-step-num">0</p>
+        <p class="mvc-panel-caption" id="mvc-step-caption">Press Play to begin the greedy pass.</p>
+      </div>
+
+      <div class="mvc-panel">
+        <p class="mvc-panel-label">Greedy picks so far</p>
+        <ul id="mvc-picks" class="mvc-picks"></ul>
+      </div>
+
+      <div class="mvc-panel mvc-panel--compare">
+        <p class="mvc-panel-label">Greedy vs. optimum</p>
+        <div class="mvc-compare">
+          <div>
+            <p class="mvc-compare-value" id="mvc-greedy-size">—</p>
+            <p class="mvc-compare-caption">greedy</p>
+          </div>
+          <div>
+            <p class="mvc-compare-value" id="mvc-opt-size">—</p>
+            <p class="mvc-compare-caption">optimum (brute force)</p>
+          </div>
+          <div>
+            <p class="mvc-compare-value" id="mvc-gap">—</p>
+            <p class="mvc-compare-caption">gap</p>
+          </div>
+        </div>
+        <p class="mvc-compare-bound" id="mvc-bound-line"></p>
+      </div>
+    </aside>
+  </section>
+
+  <section class="mvc-meta">
+    <h2>The algorithm, in three sentences</h2>
+    <p>
+      While any objective is still uncovered, pick the module that covers the largest number of currently-uncovered objectives; add it to the solution; repeat. Ties are broken by lexicographic order on module name. That's it — the entire loop is four lines in any reasonable language.
+    </p>
+
+    <h2>Why this is an approximation</h2>
+    <p>
+      Set Cover is NP-complete (the canonical reduction is from Vertex Cover; see Karp 1972), and it is known to be hard to approximate better than <code>(1 &minus; &epsilon;) ln n</code> unless P = NP (Feige 1998, Dinur &amp; Steurer 2014). The greedy algorithm achieves exactly the <code>H(n) &le; ln n + 1</code> bound where <code>n</code> is the size of the universe, and on most "natural" instances it hits or matches the optimum. That tight theoretical bound is the reason greedy is the right baseline for MVC: any improvement over greedy, on a real curriculum, is strong evidence that the structure being exploited is pedagogically meaningful rather than an artifact of the algorithm.
+    </p>
+
+    <h2>What MVC-distance would actually measure</h2>
+    <p>
+      In P4 the research question is: given a real community-college CS curriculum annotated with learning objectives, how many modules in the current offering are <em>not</em> in the greedy-MVC solution? That gap is the curriculum's "redundant load" — content that, under the graph-coverage interpretation, could be removed without losing any learning objective. The hypothesis is that curricula with higher MVC-distance also show higher DFW rates, longer time-to-completion, and lower belonging scores, because redundant load falls heaviest on students with the least slack. The hypothesis could be wrong. That's what the project would measure.
+    </p>
+
+    <h2>Limits of this visualizer</h2>
+    <ul>
+      <li>The instance is small. Set Cover is trivial at this scale; the visualization is for intuition, not for benchmarking.</li>
+      <li>The "coverage" relationship here is binary — a module either teaches an objective or it doesn't. Real curricula have partial coverage, spiral return, and prerequisite chains that this formulation ignores.</li>
+      <li>Greedy is deterministic given a tie-breaking rule. Real instructor choice is not, and the map between optimality and teachability is exactly the question P4 has to answer empirically.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
+</footer>
+
+<script src="script.js" defer></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var OBJECTIVES = [
+    { id: 1,  label: 'variables' },
+    { id: 2,  label: 'control flow' },
+    { id: 3,  label: 'functions' },
+    { id: 4,  label: 'lists' },
+    { id: 5,  label: 'dictionaries' },
+    { id: 6,  label: 'recursion' },
+    { id: 7,  label: 'debugging' },
+    { id: 8,  label: 'testing' },
+    { id: 9,  label: 'file I/O' },
+    { id: 10, label: 'APIs' }
+  ];
+
+  var MODULES = [
+    { name: 'Intro Block',    covers: [1, 2, 3, 4, 5] },
+    { name: 'Systems Block',  covers: [6, 7, 8, 9]    },
+    { name: 'Capstone A',     covers: [1, 2, 6]       },
+    { name: 'Capstone B',     covers: [3, 7, 10]      },
+    { name: 'Capstone C',     covers: [4, 8, 9, 10]   },
+    { name: 'Elective 1',     covers: [5, 10]         },
+    { name: 'Elective 2',     covers: [1, 6, 7]       },
+    { name: 'Elective 3',     covers: [9, 10]         }
+  ];
+
+  var UNIVERSE = OBJECTIVES.map(function (o) { return o.id; });
+  var UNIVERSE_SIZE = UNIVERSE.length;
+
+  // ---------- Brute force optimum ----------
+  function bruteForceOptimum() {
+    var n = MODULES.length;
+    var best = null;
+    for (var k = 1; k <= n; k++) {
+      var result = findCoverOfSize(k, 0, [], new Set());
+      if (result) { best = result; break; }
+    }
+    return best;
+  }
+  function findCoverOfSize(k, start, chosen, covered) {
+    if (covered.size === UNIVERSE_SIZE) return chosen.slice();
+    if (chosen.length === k) return null;
+    if (start >= MODULES.length) return null;
+    // prune: even if we add all remaining modules, can we cover?
+    var remainingSlots = k - chosen.length;
+    if (MODULES.length - start < remainingSlots) return null;
+    // try including MODULES[start]
+    var m = MODULES[start];
+    var added = [];
+    m.covers.forEach(function (o) { if (!covered.has(o)) { covered.add(o); added.push(o); } });
+    chosen.push(start);
+    var a = findCoverOfSize(k, start + 1, chosen, covered);
+    chosen.pop();
+    added.forEach(function (o) { covered.delete(o); });
+    if (a) return a;
+    // try skipping MODULES[start]
+    return findCoverOfSize(k, start + 1, chosen, covered);
+  }
+
+  // ---------- Greedy pass, one step at a time ----------
+  function greedyStep(covered, alreadyPicked) {
+    var bestIdx = -1;
+    var bestGain = 0;
+    for (var i = 0; i < MODULES.length; i++) {
+      if (alreadyPicked.indexOf(i) !== -1) continue;
+      var gain = 0;
+      for (var j = 0; j < MODULES[i].covers.length; j++) {
+        if (!covered.has(MODULES[i].covers[j])) gain++;
+      }
+      if (gain > bestGain) { bestGain = gain; bestIdx = i; }
+    }
+    return { idx: bestIdx, gain: bestGain };
+  }
+
+  // ---------- State ----------
+  var state = { picks: [], covered: new Set(), step: 0, playing: false, timer: null, finished: false };
+  var optimum = bruteForceOptimum();
+
+  // ---------- DOM ----------
+  var universeRow = document.getElementById('mvc-universe-row');
+  var setsList = document.getElementById('mvc-sets');
+  var coverageCount = document.getElementById('mvc-coverage-count');
+  var coverageFill = document.getElementById('mvc-coverage-fill');
+  var stepNum = document.getElementById('mvc-step-num');
+  var stepCaption = document.getElementById('mvc-step-caption');
+  var picksList = document.getElementById('mvc-picks');
+  var playBtn = document.getElementById('mvc-play');
+  var stepBtn = document.getElementById('mvc-step');
+  var resetBtn = document.getElementById('mvc-reset');
+  var speedSelect = document.getElementById('mvc-speed');
+  var greedySizeEl = document.getElementById('mvc-greedy-size');
+  var optSizeEl = document.getElementById('mvc-opt-size');
+  var gapEl = document.getElementById('mvc-gap');
+  var boundLine = document.getElementById('mvc-bound-line');
+
+  function buildUniverse() {
+    universeRow.innerHTML = '';
+    OBJECTIVES.forEach(function (o) {
+      var chip = document.createElement('span');
+      chip.className = 'mvc-obj';
+      chip.setAttribute('data-obj', String(o.id));
+      chip.innerHTML = '<span class="mvc-obj-num">' + o.id + '</span><span class="mvc-obj-label">' + o.label + '</span>';
+      universeRow.appendChild(chip);
+    });
+  }
+
+  function buildSets() {
+    setsList.innerHTML = '';
+    MODULES.forEach(function (m, i) {
+      var li = document.createElement('li');
+      li.className = 'mvc-set';
+      li.setAttribute('data-idx', String(i));
+      var head = '<div class="mvc-set-head"><span class="mvc-set-name">' + m.name + '</span><span class="mvc-set-size">|' + m.covers.length + '|</span></div>';
+      var chips = '<div class="mvc-set-chips">' + m.covers.map(function (id) {
+        return '<span class="mvc-set-chip" data-obj="' + id + '">' + id + '</span>';
+      }).join('') + '</div>';
+      var bar = '<div class="mvc-set-bar"><span class="mvc-set-bar-fill" data-bar-fill></span><span class="mvc-set-bar-label" data-bar-label></span></div>';
+      li.innerHTML = head + chips + bar;
+      setsList.appendChild(li);
+    });
+  }
+
+  function updateUniverseRow() {
+    var chips = universeRow.querySelectorAll('.mvc-obj');
+    chips.forEach(function (c) {
+      var id = parseInt(c.getAttribute('data-obj'), 10);
+      c.classList.toggle('mvc-obj--covered', state.covered.has(id));
+    });
+    coverageCount.textContent = String(state.covered.size);
+    coverageFill.style.width = (100 * state.covered.size / UNIVERSE_SIZE) + '%';
+  }
+
+  function updateSetsView(highlightIdx) {
+    var items = setsList.querySelectorAll('.mvc-set');
+    items.forEach(function (li, i) {
+      var m = MODULES[i];
+      var gain = 0;
+      m.covers.forEach(function (id) { if (!state.covered.has(id)) gain++; });
+
+      li.classList.toggle('mvc-set--picked', state.picks.indexOf(i) !== -1);
+      li.classList.toggle('mvc-set--highlight', i === highlightIdx);
+      li.classList.toggle('mvc-set--empty', gain === 0 && state.picks.indexOf(i) === -1);
+
+      var barFill = li.querySelector('[data-bar-fill]');
+      var barLabel = li.querySelector('[data-bar-label]');
+      barFill.style.width = (100 * gain / UNIVERSE_SIZE) + '%';
+      barLabel.textContent = gain > 0 ? '+' + gain + ' new' : (state.picks.indexOf(i) !== -1 ? 'picked' : '0 new');
+
+      var chips = li.querySelectorAll('.mvc-set-chip');
+      chips.forEach(function (chip) {
+        var id = parseInt(chip.getAttribute('data-obj'), 10);
+        chip.classList.toggle('mvc-set-chip--covered', state.covered.has(id));
+      });
+    });
+  }
+
+  function updatePicks() {
+    if (state.picks.length === 0) {
+      picksList.innerHTML = '<li class="mvc-pick-empty">No modules picked yet.</li>';
+      return;
+    }
+    picksList.innerHTML = state.picks.map(function (idx, i) {
+      return '<li class="mvc-pick"><span class="mvc-pick-num">' + (i + 1) + '</span><span class="mvc-pick-name">' + MODULES[idx].name + '</span></li>';
+    }).join('');
+  }
+
+  function updateCompare() {
+    if (state.finished) {
+      greedySizeEl.textContent = String(state.picks.length);
+      optSizeEl.textContent = String(optimum.length);
+      var gap = state.picks.length - optimum.length;
+      gapEl.textContent = gap === 0 ? '0' : '+' + gap;
+      gapEl.className = 'mvc-compare-value ' + (gap === 0 ? 'mvc-compare-value--optimal' : 'mvc-compare-value--gap');
+      var hBound = Math.ceil(Math.log(UNIVERSE_SIZE) + 1);
+      boundLine.innerHTML = 'Theoretical worst case: greedy &le; optimum × H(' + UNIVERSE_SIZE + ') &asymp; ' + hBound + ' modules.';
+    } else {
+      greedySizeEl.textContent = '—';
+      optSizeEl.textContent = '—';
+      gapEl.textContent = '—';
+      gapEl.className = 'mvc-compare-value';
+      boundLine.textContent = 'Run the pass to see the approximation gap.';
+    }
+  }
+
+  function doStep() {
+    if (state.finished) return false;
+    var res = greedyStep(state.covered, state.picks);
+    if (res.idx === -1 || res.gain === 0) {
+      state.finished = true;
+      stepCaption.textContent = state.covered.size === UNIVERSE_SIZE
+        ? 'All objectives covered. Greedy returned ' + state.picks.length + ' modules.'
+        : 'No remaining module adds coverage. Greedy halts.';
+      updateCompare();
+      playBtn.textContent = '▶ Play';
+      playBtn.disabled = true;
+      stepBtn.disabled = true;
+      if (state.timer) { clearTimeout(state.timer); state.timer = null; state.playing = false; }
+      return false;
+    }
+    state.step++;
+    state.picks.push(res.idx);
+    MODULES[res.idx].covers.forEach(function (o) { state.covered.add(o); });
+    stepNum.textContent = String(state.step);
+    stepCaption.textContent = 'Picked ' + MODULES[res.idx].name + ' — covers ' + res.gain + ' new objective' + (res.gain === 1 ? '' : 's') + '.';
+    updateUniverseRow();
+    updateSetsView(res.idx);
+    updatePicks();
+    if (state.covered.size === UNIVERSE_SIZE) {
+      state.finished = true;
+      updateCompare();
+      stepCaption.textContent = 'All objectives covered. Greedy returned ' + state.picks.length + ' modules.';
+      playBtn.textContent = '▶ Play';
+      playBtn.disabled = true;
+      stepBtn.disabled = true;
+      if (state.timer) { clearTimeout(state.timer); state.timer = null; state.playing = false; }
+    }
+    return true;
+  }
+
+  function play() {
+    if (state.finished) return;
+    state.playing = true;
+    playBtn.textContent = '⏸ Pause';
+    var tick = function () {
+      if (!state.playing) return;
+      var ok = doStep();
+      if (ok && !state.finished) {
+        state.timer = setTimeout(tick, parseInt(speedSelect.value, 10));
+      } else {
+        state.playing = false;
+      }
+    };
+    tick();
+  }
+
+  function pause() {
+    state.playing = false;
+    if (state.timer) { clearTimeout(state.timer); state.timer = null; }
+    playBtn.textContent = '▶ Play';
+  }
+
+  function reset() {
+    if (state.timer) { clearTimeout(state.timer); state.timer = null; }
+    state.picks = [];
+    state.covered = new Set();
+    state.step = 0;
+    state.playing = false;
+    state.finished = false;
+    stepNum.textContent = '0';
+    stepCaption.textContent = 'Press Play to begin the greedy pass.';
+    playBtn.textContent = '▶ Play';
+    playBtn.disabled = false;
+    stepBtn.disabled = false;
+    updateUniverseRow();
+    updateSetsView(-1);
+    updatePicks();
+    updateCompare();
+  }
+
+  playBtn.addEventListener('click', function () {
+    if (state.finished) return;
+    if (state.playing) pause(); else play();
+  });
+  stepBtn.addEventListener('click', function () {
+    if (state.playing) pause();
+    doStep();
+  });
+  resetBtn.addEventListener('click', reset);
+
+  buildUniverse();
+  buildSets();
+  reset();
+})();
+</script>
+
+<style>
+/* MVC Step-Through — page-scoped styles */
+.mvc-surface {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .mvc-surface { grid-template-columns: 1fr; }
+}
+.mvc-main { min-width: 0; }
+
+.mvc-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+.mvc-btn {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  padding: 0.55em 1.1em;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.mvc-btn:hover, .mvc-btn:focus-visible {
+  border-color: var(--color-accent);
+  outline: none;
+}
+.mvc-btn--primary {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+.mvc-btn--primary:hover, .mvc-btn--primary:focus-visible {
+  filter: brightness(1.1);
+}
+.mvc-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.mvc-speed {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.mvc-speed select {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  padding: 0.35em 0.5em;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.mvc-section-title {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-xs);
+}
+
+.mvc-universe {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  margin-bottom: var(--space-md);
+}
+.mvc-universe-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-bottom: var(--space-sm);
+}
+.mvc-obj {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.3em 0.65em;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  background: transparent;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+.mvc-obj-num {
+  display: inline-flex;
+  width: 1.35em; height: 1.35em;
+  align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--color-border);
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
+}
+.mvc-obj-label { color: var(--color-text-muted); }
+.mvc-obj--covered {
+  background: rgba(106, 143, 74, 0.15);
+  border-color: #6a8f4a;
+}
+.mvc-obj--covered .mvc-obj-num {
+  background: #6a8f4a;
+  color: #fff;
+}
+.mvc-obj--covered .mvc-obj-label {
+  color: var(--color-text);
+}
+
+.mvc-coverage-line {
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin: 0;
+}
+.mvc-coverage-bar {
+  flex: 1;
+  height: 5px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.mvc-coverage-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #6a8f4a;
+  transition: width 0.3s;
+}
+
+.mvc-sets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-xs);
+}
+.mvc-set {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  transition: border-color 0.2s, background 0.2s, opacity 0.2s;
+}
+.mvc-set--highlight {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(44, 74, 110, 0.15);
+}
+.mvc-set--picked {
+  background: rgba(106, 143, 74, 0.08);
+  border-color: #6a8f4a;
+}
+.mvc-set--empty { opacity: 0.55; }
+.mvc-set-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.3em;
+}
+.mvc-set-name {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+.mvc-set-size {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.mvc-set-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+  margin-bottom: 0.4em;
+}
+.mvc-set-chip {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  min-width: 1.6em;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.mvc-set-chip--covered {
+  background: #6a8f4a;
+  border-color: #6a8f4a;
+  color: #fff;
+}
+.mvc-set-bar {
+  position: relative;
+  height: 5px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 0.3em;
+}
+.mvc-set-bar-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--color-accent);
+  transition: width 0.25s;
+}
+.mvc-set-bar-label {
+  position: absolute;
+  right: 0; top: calc(100% + 0.2em);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mvc-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: sticky;
+  top: var(--space-md);
+}
+@media (max-width: 900px) {
+  .mvc-side { position: static; }
+}
+.mvc-panel {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+}
+.mvc-panel-label {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 0.3em;
+}
+.mvc-panel-big {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  line-height: 1;
+  margin: 0;
+  color: var(--color-text);
+}
+.mvc-panel-caption {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 0.4em 0 0;
+  min-height: 2.4em;
+}
+
+.mvc-picks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+.mvc-pick {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+}
+.mvc-pick-num {
+  display: inline-flex;
+  width: 1.5em; height: 1.5em;
+  align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: #6a8f4a;
+  color: #fff;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+.mvc-pick-name { color: var(--color-text); }
+.mvc-pick-empty {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.mvc-compare {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xs);
+  text-align: center;
+  margin-top: var(--space-xs);
+}
+.mvc-compare-value {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  line-height: 1;
+  margin: 0;
+  color: var(--color-text);
+}
+.mvc-compare-value--optimal { color: #6a8f4a; }
+.mvc-compare-value--gap     { color: #c97b3d; }
+.mvc-compare-caption {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin: 0.3em 0 0;
+}
+.mvc-compare-bound {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: var(--space-sm) 0 0;
+  padding-top: var(--space-xs);
+  border-top: 1px dotted var(--color-border);
+}
+
+.mvc-meta {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+.mvc-meta h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  margin-top: var(--space-lg);
+}
+.mvc-meta h2:first-of-type { margin-top: 0; }
+.mvc-meta p, .mvc-meta li {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+.mvc-meta code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--color-bg-alt, #f3f1ec);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+</style>
+</body>
+</html>

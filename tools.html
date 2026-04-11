@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prototypes — Henry Fan</title>
-  <meta name="description" content="Proof-of-concept research tools: curriculum dependency visualization, pedagogical debt analysis, and minimum viable curriculum computation.">
+  <title>Tools — Henry Fan</title>
+  <meta name="description" content="Three interactive research tools: a typed curriculum dependency graph, a pedagogical debt analyzer for syllabus text, and a step-through Minimum Viable Curriculum visualizer.">
   <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/tools.html">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Henry Fan — CS Education Research">
-  <meta property="og:title" content="Prototypes — Henry Fan">
-  <meta property="og:description" content="Proof-of-concept research tools: curriculum dependency visualization, pedagogical debt analysis, minimum viable curriculum.">
+  <meta property="og:title" content="Tools — Henry Fan">
+  <meta property="og:description" content="Three interactive research tools: typed curriculum dependency graph, pedagogical debt analyzer, and Minimum Viable Curriculum visualizer.">
   <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/tools.html">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Prototypes — Henry Fan">
-  <meta name="twitter:description" content="Proof-of-concept research tools: curriculum dependency visualization, pedagogical debt analysis, minimum viable curriculum.">
+  <meta name="twitter:title" content="Tools — Henry Fan">
+  <meta name="twitter:description" content="Three interactive research tools: typed curriculum dependency graph, pedagogical debt analyzer, and Minimum Viable Curriculum visualizer.">
 
   <meta name="author" content="Henry Fan">
   <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
@@ -47,52 +47,52 @@
 
 <main id="main" class="page-container">
   <div class="page-header">
-    <p class="label">Prototype Tools</p>
-    <h1>Proof-of-Concept Implementations</h1>
+    <p class="label">Interactive Tools</p>
+    <h1>Three working tools, three research questions.</h1>
     <p class="subtitle">
-      Three prototype tools that operationalize ideas from the research agenda. These are proof-of-concept illustrations — the theoretical frameworks they demonstrate need empirical validation against real data. They are offered here as interactive sketches of what the research aims to build and test, not as validated instruments.
+      Each tool below operationalizes one idea from the research agenda as a working interactive artifact you can click. The data is synthetic and the scoring is heuristic — validating the underlying constructs against real instructor and student data is the whole point of projects <a href="projects.html#p2">P2</a> and <a href="projects.html#p4">P4</a>. The tools exist to make the research questions concrete: you can see <em>what</em> is being measured, <em>why</em> the measurement might matter, and exactly where the empirical burden sits.
     </p>
   </div>
 
   <p class="callout">
-    <strong>Important context:</strong> These prototypes use synthetic data and heuristic scoring. Validating the underlying constructs is the goal of projects <a href="projects.html#p2">P2</a> and <a href="projects.html#p4">P4</a>. The prototypes exist to make abstract ideas concrete — they illustrate <em>what</em> the research aims to measure, not <em>how well</em> it can be measured yet.
+    <strong>What these tools are:</strong> working interactive artifacts that render a structural claim — a typed curriculum graph, a four-dimension scoring rubric, a greedy set-cover animation — so that a reader can form an independent judgment about whether the underlying measurement is tractable. <strong>What they are not:</strong> validated instruments. They would become validated instruments only after the studies in P2 and P4 are run against real syllabus corpora, instructor annotations, and student outcomes.
   </p>
 
   <!-- Tool 1 -->
-  <div class="card">
-    <span class="card-label">Prototype for Project P4 · Graph Visualization</span>
-    <p class="card-title card-title--md">Curriculum Dependency Visualizer</p>
-    <p class="card-desc">
-      An interactive graph representation of a synthetic introductory linear algebra curriculum using a typed dependency grammar. Each node is a learning objective; each edge encodes one of four dependency types (conceptual, procedural, motivational, social). The empirical question in P4 is whether real instructor-annotated graphs show structural patterns that predict student outcomes — this prototype shows what such a graph looks like and what structural statistics it produces.
-    </p>
-    <p class="card-desc mt-md">
-      <span class="doc-status">Working paper · draft in preparation</span>
-    </p>
-  </div>
+  <a class="card-link" href="tool-curriculum-graph.html">
+    <div class="card">
+      <span class="card-label">Tool 1 · Project P4 · Open the interactive graph →</span>
+      <p class="card-title card-title--md">Curriculum Dependency Visualizer</p>
+      <p class="card-desc">
+        An interactive SVG graph of a synthetic introductory linear algebra curriculum under a typed dependency grammar. Each of 22 nodes is a learning objective; each edge is one of four types — conceptual, procedural, motivational, social. Click any node to focus its neighborhood; live statistics report density, longest path, fan-in/out, motivational ratio, and bottleneck candidates. The empirical question P4 asks is whether structural features of real instructor-annotated graphs predict student outcomes; this tool shows what such a graph looks like and which statistics are worth tracking.
+      </p>
+      <p class="card-desc mt-md"><em>Click anywhere on this card to open the tool.</em></p>
+    </div>
+  </a>
 
   <!-- Tool 2 -->
-  <div class="card">
-    <span class="card-label">Prototype for Project P2 · Text Analysis</span>
-    <p class="card-title card-title--md">Pedagogical Debt Analyzer</p>
-    <p class="card-desc">
-      A text-input tool that scores course descriptions and syllabus excerpts for motivational, scaffolding, and verification structure using heuristics grounded in Harel's necessity principle. Users paste course material and receive a structural analysis across four dimensions. These are heuristic scores based on keyword patterns and structural rules — P2 is the project to validate whether they correlate with expert annotation and student outcomes.
-    </p>
-    <p class="card-desc mt-md">
-      <span class="doc-status">Working paper · draft in preparation</span>
-    </p>
-  </div>
+  <a class="card-link" href="tool-pedagogical-debt.html">
+    <div class="card">
+      <span class="card-label">Tool 2 · Project P2 · Open the analyzer →</span>
+      <p class="card-title card-title--md">Pedagogical Debt Analyzer</p>
+      <p class="card-desc">
+        A text-input tool that scores pasted syllabus language across four dimensions drawn from Harel's necessity principle and the belonging/help-seeking literature: <em>motivational framing</em>, <em>scaffolding visibility</em>, <em>verification structure</em>, and <em>belonging signals</em>. Rules fire on concrete keyword and syntactic patterns and highlight matches inline so the reader can see exactly why each score moved. Three preset excerpts (weed-out, necessity-first, belonging-centered) let you calibrate the rubric without pasting anything. The heuristics are plausible; P2 is the study that would measure whether they correlate with expert annotation and student outcomes.
+      </p>
+      <p class="card-desc mt-md"><em>Click anywhere on this card to open the tool.</em></p>
+    </div>
+  </a>
 
   <!-- Tool 3 -->
-  <div class="card">
-    <span class="card-label">Prototype for Project P4 · Algorithm Visualization</span>
-    <p class="card-title card-title--md">Minimum Viable Curriculum Visualizer</p>
-    <p class="card-desc">
-      A step-through visualization of a greedy approximation algorithm for the Minimum Viable Curriculum (MVC) problem on a synthetic curriculum graph. The key theoretical result: finding the optimal MVC is NP-complete (polynomial reduction from Set Cover). This visualizer illustrates the algorithm on a small example. The research question in P4 is whether MVC-distance — how far a real curriculum is from its minimum viable form — predicts student outcomes.
-    </p>
-    <p class="card-desc mt-md">
-      <span class="doc-status">Working paper · draft in preparation</span>
-    </p>
-  </div>
+  <a class="card-link" href="tool-mvc.html">
+    <div class="card">
+      <span class="card-label">Tool 3 · Project P4 · Open the visualizer →</span>
+      <p class="card-title card-title--md">Minimum Viable Curriculum Step-Through</p>
+      <p class="card-desc">
+        A play/pause/step/reset animation of a greedy set-cover approximation for the Minimum Viable Curriculum problem on a small synthetic graph. The theoretical setup: finding the optimal MVC is NP-hard by polynomial reduction from Set Cover, so greedy is a natural baseline with a known ln(n)+1 approximation bound. The tool shows the algorithm picking one objective per step, the coverage set growing, and the approximation gap against a brute-force optimum. The research claim P4 would test is that <em>MVC-distance</em> — how far a real curriculum sits from its minimum viable form — predicts student persistence and grade outcomes.
+      </p>
+      <p class="card-desc mt-md"><em>Click anywhere on this card to open the tool.</em></p>
+    </div>
+  </a>
 
   <hr>
 
@@ -138,7 +138,7 @@
     A longer-form design artifact — <strong>ProjectBridge</strong>, a project-based learning platform concept for community colleges — lives on the <a href="applied.html">Applied Work page</a>. It operationalizes the same structural equity principles that guide the research: the accountability features are grounded in the help-seeking literature, the data model is designed to produce the behavioral signals P1 would analyze, and the faculty-adoption strategy reflects what the institutional-change literature suggests about how tools actually get used.
   </p>
 
-  <p class="font-sans text-small text-muted mt-xl">Last updated: March 2026</p>
+  <p class="font-sans text-small text-muted mt-xl">Last updated: April 2026</p>
 </main>
 
 <footer class="site-footer">

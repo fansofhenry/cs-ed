@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedagogical Debt Analyzer — Henry Fan</title>
+  <meta name="description" content="A rule-based text analyzer that scores syllabus language across four pedagogical dimensions: motivational framing, scaffolding visibility, verification structure, and belonging signals.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/tool-pedagogical-debt.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Pedagogical Debt Analyzer — Henry Fan">
+  <meta property="og:description" content="A rule-based text analyzer that scores syllabus language across four pedagogical dimensions.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/tool-pedagogical-debt.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pedagogical Debt Analyzer — Henry Fan">
+  <meta name="twitter:description" content="A rule-based text analyzer that scores syllabus language across four pedagogical dimensions.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Henry Fan</a>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="tools.html" class="active">Tools</a></li>
+      <li><a href="applied.html">Applied</a></li>
+      <li><a href="background.html">Background</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="page-container wide">
+  <div class="page-header">
+    <p class="label">Interactive Prototype · Project P2</p>
+    <h1>Pedagogical Debt Analyzer</h1>
+    <p class="subtitle">
+      Paste a course description, syllabus excerpt, or assignment prompt. The analyzer scores the text across four dimensions drawn from Harel's necessity principle and the belonging / help-seeking literature, highlights the phrases that moved each score, and reports a composite <em>pedagogical debt</em> estimate. Three preset excerpts let you calibrate the rubric without typing.
+    </p>
+  </div>
+
+  <p class="callout">
+    <strong>What this is and isn't.</strong> The scoring rules are heuristic — keyword patterns and syntactic cues, not a validated instrument. They encode plausible operationalizations of four constructs, nothing more. The research question in <a href="projects.html#p2">P2</a> is whether rule-based scores like these correlate with expert human annotation and with student outcomes across a real syllabus corpus. Until that study is run, treat the numbers as a way to make the rubric concrete — not as a measurement.
+  </p>
+
+  <section class="pda-surface" aria-label="Pedagogical debt analyzer">
+    <div class="pda-input-col">
+      <div class="pda-preset-row" role="group" aria-label="Preset excerpts">
+        <button type="button" class="pda-preset" data-preset="weed">Weed-out framing</button>
+        <button type="button" class="pda-preset" data-preset="necessity">Necessity-first framing</button>
+        <button type="button" class="pda-preset" data-preset="belonging">Belonging-centered framing</button>
+        <button type="button" class="pda-preset pda-preset--clear" data-preset="clear">Clear</button>
+      </div>
+
+      <label class="pda-label" for="pda-input">Paste text to analyze</label>
+      <textarea id="pda-input" rows="14" spellcheck="false" aria-describedby="pda-input-hint"
+        placeholder="Paste a course description, syllabus paragraph, or assignment prompt here — or click one of the preset excerpts above."></textarea>
+      <p id="pda-input-hint" class="pda-hint">Scoring runs live as you type. Word count: <span id="pda-wordcount">0</span></p>
+
+      <div class="pda-highlight-wrap">
+        <p class="pda-highlight-title">Inline match view</p>
+        <p class="pda-highlight-hint">Phrases that matched a rule are highlighted by dimension.</p>
+        <div id="pda-highlight" class="pda-highlight" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <aside class="pda-results-col" aria-live="polite">
+      <div class="pda-composite">
+        <p class="pda-composite-label">Composite pedagogical debt</p>
+        <p class="pda-composite-score" id="pda-composite-score">—</p>
+        <p class="pda-composite-caption" id="pda-composite-caption">Paste text or pick a preset to begin.</p>
+      </div>
+
+      <div class="pda-dims" id="pda-dims">
+        <div class="pda-dim" data-dim="motivational">
+          <div class="pda-dim-head">
+            <span class="pda-dim-name">Motivational framing</span>
+            <span class="pda-dim-score" data-dim-score>0</span>
+          </div>
+          <div class="pda-dim-bar"><div class="pda-dim-fill" data-dim-fill></div></div>
+          <p class="pda-dim-blurb">Does the text create intellectual need before introducing technical tools? (Harel's necessity principle.)</p>
+          <ul class="pda-dim-fires" data-dim-fires></ul>
+        </div>
+
+        <div class="pda-dim" data-dim="scaffolding">
+          <div class="pda-dim-head">
+            <span class="pda-dim-name">Scaffolding visibility</span>
+            <span class="pda-dim-score" data-dim-score>0</span>
+          </div>
+          <div class="pda-dim-bar"><div class="pda-dim-fill" data-dim-fill></div></div>
+          <p class="pda-dim-blurb">Are intermediate checkpoints, office hours, and help resources named and normalized, or invisible?</p>
+          <ul class="pda-dim-fires" data-dim-fires></ul>
+        </div>
+
+        <div class="pda-dim" data-dim="verification">
+          <div class="pda-dim-head">
+            <span class="pda-dim-name">Verification structure</span>
+            <span class="pda-dim-score" data-dim-score>0</span>
+          </div>
+          <div class="pda-dim-bar"><div class="pda-dim-fill" data-dim-fill></div></div>
+          <p class="pda-dim-blurb">Can a student know whether their work is correct before it is graded? (Self-check, test cases, worked examples.)</p>
+          <ul class="pda-dim-fires" data-dim-fires></ul>
+        </div>
+
+        <div class="pda-dim" data-dim="belonging">
+          <div class="pda-dim-head">
+            <span class="pda-dim-name">Belonging signals</span>
+            <span class="pda-dim-score" data-dim-score>0</span>
+          </div>
+          <div class="pda-dim-bar"><div class="pda-dim-fill" data-dim-fill></div></div>
+          <p class="pda-dim-blurb">Does the text signal that confusion is expected and help-seeking is welcomed, or that struggle is disqualifying?</p>
+          <ul class="pda-dim-fires" data-dim-fires></ul>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="pda-meta">
+    <h2>How the scoring works</h2>
+    <p>
+      The analyzer runs a fixed set of regex rules against the input text. Each rule belongs to one of the four dimensions and carries a weight — positive rules move the dimension score toward 100 ("healthy"), negative rules move it toward 0 ("debt"). Each dimension starts at a neutral midpoint (50). When a rule fires, its weight is added to the dimension score and the matched span is recorded for the inline highlight. The composite pedagogical debt score is <code>100 &minus; mean(dimension scores)</code>, so 0 is low debt and 100 is high debt.
+    </p>
+    <p>
+      The rule set is small and intentionally interpretable. Every rule firing is visible in the per-dimension breakdown on the right. You should be able to read the rules, disagree with one, and predict how the score would change if it were removed. That transparency is the whole point: a validated instrument that reads syllabus language would need exactly this kind of rule-level auditability before any community-college instructor would be asked to trust it.
+    </p>
+
+    <h2>Why these four dimensions</h2>
+    <ul class="pda-why-list">
+      <li><strong>Motivational framing</strong> operationalizes Harel's claim that knowledge must be introduced in response to a problem the learner experiences as real. Texts that frame a topic with a concrete problem first score up; texts that lead with technical definitions and threat ("must", "required", "rigorous") score down.</li>
+      <li><strong>Scaffolding visibility</strong> draws on the help-seeking literature — Karabenick, Newman, Ryan — which consistently finds that the biggest predictor of whether students use support resources is whether those resources are named, timed, and normalized in writing. "Office hours Tuesday 2–4 pm, no appointment needed" scores higher than "help is available upon request."</li>
+      <li><strong>Verification structure</strong> captures whether the text gives students any way to know whether their work is correct before submitting it for a grade. Test cases, worked examples, self-check questions, reference outputs — these are cheap to provide and strongly associated with reduced help-seeking suppression in novices.</li>
+      <li><strong>Belonging signals</strong> follows Walton & Cohen's belonging-uncertainty work and the stereotype-threat literature. Explicit normalization of confusion and struggle ("most students find this confusing the first time — that's expected") moves the score up; implicit gatekeeping ("this course is not for everyone", "expect to work harder than in any prior course") moves it down.</li>
+    </ul>
+
+    <h2>What this tool does not measure</h2>
+    <p>
+      Instructor intent. Real classroom experience. Whether the syllabus matches what actually happens in week 4. The tool reads only the text it is given, and even that reading is shallow — a regex over a few hundred words. The purpose is to make the rubric concrete and falsifiable, so that when P2 runs against a real corpus the comparison between rule-based scores, expert annotation, and student outcomes is a sharp empirical question rather than a vague invitation to "study pedagogy."
+    </p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
+</footer>
+
+<script src="script.js" defer></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var RULES = [
+    // Motivational framing — positive
+    { dim: 'motivational', weight:  8, label: 'problem-first framing', re: /\b(before (we|you) (learn|see|use|introduce)|start(s|ing)? with a (real|concrete) (problem|question|case)|motivat(ed|ion) by|arose from|grew out of|came from a (real )?need)\b/gi },
+    { dim: 'motivational', weight:  6, label: 'real-world anchor', re: /\b(real[- ]world|your own (data|experience|life)|your neighborhood|your community|civic|local)\b/gi },
+    { dim: 'motivational', weight:  5, label: 'intellectual need language', re: /\b(why (does|do|would|should)|what (problem|question) does this (solve|answer)|you will need|you'll need)\b/gi },
+    // Motivational framing — negative
+    { dim: 'motivational', weight: -8, label: 'rigor-as-threat', re: /\b(rigorous|rigor|fast[- ]paced|demanding course|not for the faint|prepare to work harder)\b/gi },
+    { dim: 'motivational', weight: -6, label: 'definition-first', re: /\b(we (will )?(define|introduce|cover) (the|a) (formal|precise) (definition|concept) of|begin(s|ning)? with the definition)\b/gi },
+    { dim: 'motivational', weight: -4, label: 'coverage framing', re: /\b(we (will )?cover|topics (include|to be covered)|survey of|broad overview)\b/gi },
+
+    // Scaffolding visibility — positive
+    { dim: 'scaffolding',  weight:  8, label: 'named office hours', re: /\boffice hours?\b[^.?!]{0,60}\b(mon|tue|wed|thu|fri|sat|sun|daily|weekly|\d{1,2}\s*(am|pm|:))/gi },
+    { dim: 'scaffolding',  weight:  6, label: 'help normalized', re: /\b(no appointment|drop[- ]?in|walk[- ]?in|just (stop|show) by|come by any time)\b/gi },
+    { dim: 'scaffolding',  weight:  5, label: 'tutoring / study group named', re: /\b(tutoring center|learning center|study group|peer (tutor|mentor)|supplemental instruction|si session)\b/gi },
+    { dim: 'scaffolding',  weight:  4, label: 'explicit checkpoints', re: /\b(checkpoint|milestone|weekly check-?in|progress review|mid-?project review)\b/gi },
+    // Scaffolding visibility — negative
+    { dim: 'scaffolding',  weight: -6, label: 'help gated', re: /\b(by appointment only|appointment required|email to schedule|schedule (a|an) (meeting|appointment))\b/gi },
+    { dim: 'scaffolding',  weight: -4, label: 'help vague', re: /\b(help is available|assistance is available|support is available|as needed|upon request)\b/gi },
+
+    // Verification structure — positive
+    { dim: 'verification', weight:  8, label: 'test cases provided', re: /\b(test cases?|sample (input|output)s?|expected output|reference (solution|output)|autograder)\b/gi },
+    { dim: 'verification', weight:  6, label: 'worked examples', re: /\b(worked example|solved example|step[- ]by[- ]step (walk-?through|example)|model solution)\b/gi },
+    { dim: 'verification', weight:  5, label: 'self-check', re: /\b(self[- ]check|check your (understanding|work|answer)|try this (first|yourself)|practice problems? with answers)\b/gi },
+    { dim: 'verification', weight:  4, label: 'draft / revision loop', re: /\b(draft|revision|resubmit|resubmission|feedback cycle|iterate on)\b/gi },
+    // Verification structure — negative
+    { dim: 'verification', weight: -5, label: 'no feedback loop', re: /\b(final (grade|submission) only|no resubmissions?|no revisions?|one[- ]shot)\b/gi },
+    { dim: 'verification', weight: -3, label: 'grade-opaque', re: /\b(grades? will be (posted|released)|you will (receive|be given) a (letter )?grade)\b/gi },
+
+    // Belonging signals — positive
+    { dim: 'belonging',    weight:  8, label: 'confusion normalized', re: /\b((most|many) students find (this|it) (confusing|hard|challenging)[^.?!]*first|it's (normal|okay|ok) to (feel )?(confused|lost|stuck)|you are (not )?expected to (already )?know)\b/gi },
+    { dim: 'belonging',    weight:  6, label: 'no prerequisites gatekeeping', re: /\b(no (prior|previous) (experience|background) (required|needed|assumed)|all (backgrounds|majors) welcome|beginners welcome)\b/gi },
+    { dim: 'belonging',    weight:  5, label: 'help-seeking invited', re: /\b(please ask|ask questions (early|often|any time)|don'?t hesitate|come talk to me|reach out)\b/gi },
+    { dim: 'belonging',    weight:  4, label: 'community language', re: /\b(we|us|together|our class|as a class|cohort)\b/gi },
+    // Belonging signals — negative
+    { dim: 'belonging',    weight: -8, label: 'gatekeeping', re: /\b(not (for|a course for) (everyone|the faint)|weed[- ]out|only the (best|top)|expect many students to)\b/gi },
+    { dim: 'belonging',    weight: -6, label: 'struggle as disqualifying', re: /\b(if you (can'?t|cannot) keep up|if you fall behind you will|should (already )?(know|be comfortable with))\b/gi },
+    { dim: 'belonging',    weight: -4, label: 'impersonal register', re: /\b(students (are|will be) (expected|required) to|the student (must|shall|will))\b/gi },
+  ];
+
+  var PRESETS = {
+    weed: "This is a rigorous, fast-paced introduction to computer science. It is not a course for everyone. Students are expected to be comfortable with algebra and to work harder than in any prior course. We will cover variables, control flow, functions, recursion, and data structures. Each topic begins with the formal definition of the concept, followed by examples. Grades will be posted after each exam. No resubmissions. Help is available upon request; office hours by appointment only. If you cannot keep up, you should drop the course early.",
+    necessity: "We start with a real problem: you and two classmates will survey three students each about a service they couldn't find on campus. Before we write a single line of code, you will feel the search problem. Only then do we introduce the technical tools — lists, dictionaries, and functions — that let you build a searchable directory your peers will actually use. Each week has a worked example, test cases, and a draft / revision loop so you can check your understanding before a grade is assigned. Office hours Tuesday 2–4 pm and Thursday 10–12, no appointment needed. No prior experience required.",
+    belonging: "Welcome. Most students find the first three weeks confusing the first time through — that is expected, and it is not a sign that you don't belong here. We work as a cohort: you will have a study group from week one, and we learn together. Please ask questions early and often. Tutoring in the Learning Center is drop-in, weekly, and free. Every assignment has sample inputs, expected outputs, and a self-check before you submit. You can resubmit any assignment after feedback. No prior programming experience is assumed — all backgrounds and majors welcome. If you are stuck, come talk to me; that is exactly what office hours are for.",
+    clear: ""
+  };
+
+  var DIM_KEYS = ['motivational', 'scaffolding', 'verification', 'belonging'];
+  var DIM_MIDPOINT = 50;
+
+  var input = document.getElementById('pda-input');
+  var wordcountEl = document.getElementById('pda-wordcount');
+  var highlightEl = document.getElementById('pda-highlight');
+  var compositeScoreEl = document.getElementById('pda-composite-score');
+  var compositeCaptionEl = document.getElementById('pda-composite-caption');
+  var presetButtons = document.querySelectorAll('.pda-preset');
+  var dimEls = {};
+  DIM_KEYS.forEach(function (k) {
+    dimEls[k] = document.querySelector('.pda-dim[data-dim="' + k + '"]');
+  });
+
+  function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+
+  function analyze(text) {
+    var scores = { motivational: DIM_MIDPOINT, scaffolding: DIM_MIDPOINT, verification: DIM_MIDPOINT, belonging: DIM_MIDPOINT };
+    var fires = { motivational: [], scaffolding: [], verification: [], belonging: [] };
+    var spans = [];
+
+    if (!text || !text.trim()) {
+      return { scores: scores, fires: fires, spans: spans };
+    }
+
+    RULES.forEach(function (rule) {
+      rule.re.lastIndex = 0;
+      var m;
+      var count = 0;
+      var firstMatch = null;
+      while ((m = rule.re.exec(text)) !== null) {
+        count++;
+        if (firstMatch === null) firstMatch = m[0];
+        spans.push({ start: m.index, end: m.index + m[0].length, dim: rule.dim, weight: rule.weight });
+        if (m.index === rule.re.lastIndex) rule.re.lastIndex++;
+        if (count > 12) break;
+      }
+      if (count > 0) {
+        var dampened = rule.weight * (1 + Math.log(count) * 0.6);
+        scores[rule.dim] += dampened;
+        fires[rule.dim].push({ label: rule.label, weight: rule.weight, count: count, sample: firstMatch });
+      }
+    });
+
+    DIM_KEYS.forEach(function (k) {
+      scores[k] = Math.round(clamp(scores[k], 0, 100));
+    });
+
+    spans.sort(function (a, b) { return a.start - b.start || b.end - a.end; });
+    var merged = [];
+    spans.forEach(function (s) {
+      var last = merged[merged.length - 1];
+      if (last && s.start < last.end) {
+        if (s.end > last.end) last.end = s.end;
+        return;
+      }
+      merged.push({ start: s.start, end: s.end, dim: s.dim });
+    });
+
+    return { scores: scores, fires: fires, spans: merged };
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function renderHighlight(text, spans) {
+    if (!text) { highlightEl.innerHTML = '<span class="pda-empty">Nothing to show yet.</span>'; return; }
+    var out = '';
+    var cursor = 0;
+    spans.forEach(function (s) {
+      if (s.start > cursor) out += escapeHtml(text.slice(cursor, s.start));
+      out += '<mark class="pda-mark pda-mark--' + s.dim + '">' + escapeHtml(text.slice(s.start, s.end)) + '</mark>';
+      cursor = s.end;
+    });
+    if (cursor < text.length) out += escapeHtml(text.slice(cursor));
+    highlightEl.innerHTML = out;
+  }
+
+  function renderScores(result) {
+    DIM_KEYS.forEach(function (k) {
+      var el = dimEls[k];
+      var score = result.scores[k];
+      el.querySelector('[data-dim-score]').textContent = score;
+      var fill = el.querySelector('[data-dim-fill]');
+      fill.style.width = score + '%';
+      fill.className = 'pda-dim-fill ' + (score >= 65 ? 'pda-dim-fill--healthy' : score <= 35 ? 'pda-dim-fill--debt' : 'pda-dim-fill--mid');
+
+      var firesEl = el.querySelector('[data-dim-fires]');
+      var fires = result.fires[k];
+      if (fires.length === 0) {
+        firesEl.innerHTML = '<li class="pda-fire-empty">No rules fired for this dimension.</li>';
+      } else {
+        firesEl.innerHTML = fires.map(function (f) {
+          var sign = f.weight >= 0 ? '+' : '';
+          var cls = f.weight >= 0 ? 'pda-fire--pos' : 'pda-fire--neg';
+          return '<li class="pda-fire ' + cls + '">' +
+            '<span class="pda-fire-weight">' + sign + f.weight + '</span>' +
+            '<span class="pda-fire-label">' + escapeHtml(f.label) + '</span>' +
+            '<span class="pda-fire-count">×' + f.count + '</span>' +
+            (f.sample ? '<span class="pda-fire-sample">"' + escapeHtml(f.sample.length > 48 ? f.sample.slice(0, 46) + '…' : f.sample) + '"</span>' : '') +
+            '</li>';
+        }).join('');
+      }
+    });
+
+    var mean = (result.scores.motivational + result.scores.scaffolding + result.scores.verification + result.scores.belonging) / 4;
+    var debt = Math.round(100 - mean);
+    compositeScoreEl.textContent = debt;
+    compositeScoreEl.className = 'pda-composite-score ' + (debt >= 55 ? 'pda-composite-score--high' : debt <= 30 ? 'pda-composite-score--low' : 'pda-composite-score--mid');
+    compositeCaptionEl.textContent = debt >= 55
+      ? 'High pedagogical debt: the text leans on gatekeeping and hides its scaffolding.'
+      : debt <= 30
+        ? 'Low pedagogical debt: the text motivates first, names its support, and signals belonging.'
+        : 'Mixed signals: some dimensions healthy, others carry debt.';
+  }
+
+  function run() {
+    var text = input.value;
+    var words = (text.trim().match(/\S+/g) || []).length;
+    wordcountEl.textContent = words;
+    var result = analyze(text);
+    renderHighlight(text, result.spans);
+    renderScores(result);
+  }
+
+  input.addEventListener('input', run);
+
+  presetButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-preset');
+      if (PRESETS[key] !== undefined) {
+        input.value = PRESETS[key];
+        run();
+        input.focus();
+      }
+    });
+  });
+
+  run();
+})();
+</script>
+
+<style>
+/* Pedagogical Debt Analyzer — page-scoped styles */
+.pda-surface {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .pda-surface { grid-template-columns: 1fr; }
+}
+
+.pda-input-col { min-width: 0; }
+
+.pda-preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+.pda-preset {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  padding: 0.5em 0.9em;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.pda-preset:hover, .pda-preset:focus-visible {
+  border-color: var(--color-accent);
+  outline: none;
+}
+.pda-preset--clear {
+  color: var(--color-text-muted);
+}
+
+.pda-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+#pda-input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  resize: vertical;
+  min-height: 220px;
+}
+#pda-input:focus-visible {
+  border-color: var(--color-accent);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.pda-hint {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: var(--space-xs) 0 var(--space-md);
+}
+
+.pda-highlight-wrap {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-bg-alt, #f3f1ec);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+.pda-highlight-title {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-xs);
+}
+.pda-highlight-hint {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-sm);
+}
+.pda-highlight {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(--color-text);
+  min-height: 2em;
+}
+.pda-empty { color: var(--color-text-muted); font-style: italic; }
+
+.pda-mark {
+  padding: 0.05em 0.2em;
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  border-bottom: 2px solid transparent;
+}
+.pda-mark--motivational { background: rgba(201, 123, 61, 0.18); border-bottom-color: #c97b3d; }
+.pda-mark--scaffolding  { background: rgba(44, 74, 110, 0.15); border-bottom-color: #2c4a6e; }
+.pda-mark--verification { background: rgba(106, 143, 74, 0.20); border-bottom-color: #6a8f4a; }
+.pda-mark--belonging    { background: rgba(156, 89, 140, 0.18); border-bottom-color: #9c598c; }
+
+.pda-results-col {
+  position: sticky;
+  top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+@media (max-width: 900px) {
+  .pda-results-col { position: static; }
+}
+
+.pda-composite {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  text-align: center;
+}
+.pda-composite-label {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-xs);
+}
+.pda-composite-score {
+  font-family: var(--font-serif);
+  font-size: 3.2rem;
+  line-height: 1;
+  font-weight: 400;
+  margin: 0;
+  color: var(--color-text);
+}
+.pda-composite-score--low  { color: #6a8f4a; }
+.pda-composite-score--mid  { color: #c97b3d; }
+.pda-composite-score--high { color: #9c2f2f; }
+.pda-composite-caption {
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+  margin: var(--space-xs) 0 0;
+}
+
+.pda-dims {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.pda-dim {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+}
+.pda-dim-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.pda-dim-name {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.pda-dim-score {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: var(--color-text);
+}
+.pda-dim-bar {
+  margin-top: 0.35em;
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.pda-dim-fill {
+  height: 100%;
+  width: 50%;
+  transition: width 0.2s;
+}
+.pda-dim-fill--healthy { background: #6a8f4a; }
+.pda-dim-fill--mid     { background: #c97b3d; }
+.pda-dim-fill--debt    { background: #9c2f2f; }
+.pda-dim-blurb {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: var(--space-xs) 0 var(--space-xs);
+  line-height: 1.5;
+}
+.pda-dim-fires {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+.pda-fire {
+  display: grid;
+  grid-template-columns: 2.2em 1fr auto;
+  align-items: baseline;
+  gap: 0.4em;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  padding: 0.2em 0;
+  border-top: 1px dotted var(--color-border);
+}
+.pda-fire:first-child { border-top: none; }
+.pda-fire-weight {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  text-align: right;
+}
+.pda-fire--pos .pda-fire-weight { color: #6a8f4a; }
+.pda-fire--neg .pda-fire-weight { color: #9c2f2f; }
+.pda-fire-label { color: var(--color-text); }
+.pda-fire-count { color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.pda-fire-sample {
+  grid-column: 2 / -1;
+  color: var(--color-text-muted);
+  font-style: italic;
+  font-size: 0.74rem;
+  margin-top: 0.1em;
+}
+.pda-fire-empty {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: 0.2em 0;
+}
+
+.pda-meta {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+.pda-meta h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  margin-top: var(--space-lg);
+}
+.pda-meta h2:first-of-type { margin-top: 0; }
+.pda-meta p, .pda-meta li {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+.pda-why-list {
+  padding-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.pda-meta code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--color-bg-alt, #f3f1ec);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+</style>
+</body>
+</html>

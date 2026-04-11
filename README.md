@@ -17,7 +17,11 @@ Structural features of introductory CS courses that predict help-seeking, persis
 | `projects.html` | Five empirical projects (P1–P5) with full designs |
 | `teaching.html` | Curriculum designs and teaching philosophy |
 | `writing.html` | Research statement, working papers, 30-entry annotated reading list |
-| `tools.html` | Prototype tools (curriculum graph, pedagogical-debt analyzer, MVC) |
+| `tools.html` | Hub for the three interactive tools |
+| `tool-curriculum-graph.html` | Interactive typed-dependency curriculum graph with live structural stats |
+| `tool-pedagogical-debt.html` | Rule-based syllabus scorer across four dimensions with inline highlights |
+| `tool-mvc.html` | Greedy MVC step-through with brute-force optimum comparison |
+| `methods.html` | Methods appendix: worked annotation, interview guide, κ calculation, power analysis, threats to validity |
 | `background.html` | Origin story and contact |
 | `applied.html` | ProjectBridge redesign and research-informed design artifacts |
 | `style.css` | Shared editorial stylesheet |

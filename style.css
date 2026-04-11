@@ -908,6 +908,33 @@ details .detail-content {
   scroll-margin-top: 5rem;
 }
 
+.reading-essay {
+  margin: var(--space-lg) 0 var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 4px;
+  background: var(--color-bg);
+}
+.reading-essay h3 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  margin: 0 0 var(--space-md);
+  color: var(--color-text);
+}
+.reading-essay p {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  margin: 0 0 var(--space-md);
+  color: var(--color-text);
+}
+.reading-essay p:last-child { margin-bottom: 0; }
+.reading-essay strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
 /* ---- Document status pill (used where a PDF link would otherwise go) ---- */
 
 .doc-status {
@@ -985,6 +1012,61 @@ details .detail-content {
 [id^="p"].card,
 .page-toc-target {
   scroll-margin-top: 5rem;
+}
+
+/* ---- Home scan strip ---- */
+
+.home-scanstrip {
+  margin: var(--space-xl) 0 0;
+  padding: var(--space-md) 0 0;
+  border-top: 1px solid var(--color-border);
+}
+.home-scanstrip-label {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-sm);
+}
+.home-scanstrip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-sm);
+}
+.home-scanstrip-list a {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  text-decoration: none;
+  height: 100%;
+  transition: border-color 0.15s, background 0.15s;
+}
+.home-scanstrip-list a:hover,
+.home-scanstrip-list a:focus-visible {
+  border-color: var(--color-accent);
+  outline: none;
+}
+.home-scanstrip-num {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+.home-scanstrip-text {
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
 }
 
 /* ---- Print ---- */

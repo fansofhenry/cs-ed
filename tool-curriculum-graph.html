@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curriculum Dependency Visualizer — Henry Fan</title>
+  <meta name="description" content="Interactive typed-dependency graph of a synthetic applied linear algebra curriculum, with live structural statistics. Illustrative prototype for research question Q2.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/tool-curriculum-graph.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Curriculum Dependency Visualizer — Henry Fan">
+  <meta property="og:description" content="Interactive typed-dependency graph of a synthetic applied linear algebra curriculum, with live structural statistics.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/tool-curriculum-graph.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Curriculum Dependency Visualizer — Henry Fan">
+  <meta name="twitter:description" content="Interactive typed-dependency graph of a synthetic applied linear algebra curriculum, with live structural statistics.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Henry Fan</a>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="tools.html" class="active">Tools</a></li>
+      <li><a href="applied.html">Applied</a></li>
+      <li><a href="background.html">Background</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="page-container wide">
+  <div class="page-header">
+    <p class="label">Interactive Prototype · Project P4</p>
+    <h1>Curriculum Dependency Visualizer</h1>
+    <p class="subtitle">
+      A synthetic applied linear algebra curriculum represented as a typed-dependency graph: 22 learning objectives connected by four dependency types. Click a node to focus its neighborhood; the stats panel updates live. This is an illustrative prototype — the research question in <a href="projects.html#p4">P4</a> is whether real instructor-annotated graphs produce structural signatures that predict student outcomes.
+    </p>
+  </div>
+
+  <p class="callout">
+    <strong>What this is and isn't.</strong> The graph and edge types are synthetic. The dependency grammar is a working hypothesis grounded in Harel's necessity principle and existing prerequisite-chain research (Auvinen et al., Wang et al.). The tool demonstrates <em>what</em> a typed curriculum graph looks like and <em>which</em> structural statistics it admits — not that those statistics are validated predictors of student outcomes. Validation is the job of P4.
+  </p>
+
+  <section class="tool-surface" aria-label="Curriculum graph">
+    <div class="tool-legend" role="note">
+      <p class="tool-legend-title">Dependency types</p>
+      <ul class="tool-legend-list">
+        <li><span class="legend-swatch legend-swatch--conceptual"></span> Conceptual — requires understanding of</li>
+        <li><span class="legend-swatch legend-swatch--procedural"></span> Procedural — requires ability to perform</li>
+        <li><span class="legend-swatch legend-swatch--motivational"></span> Motivational — provides intellectual need for</li>
+        <li><span class="legend-swatch legend-swatch--social"></span> Social — invokes peer or community context</li>
+      </ul>
+      <p class="tool-legend-hint">Click a node to focus · click empty space to clear</p>
+    </div>
+
+    <div class="tool-graph-wrap">
+      <svg id="curriculum-graph" viewBox="0 0 960 620" role="img" aria-label="Typed dependency graph of a synthetic applied linear algebra curriculum" focusable="false"></svg>
+    </div>
+
+    <aside class="tool-stats" aria-live="polite">
+      <p class="tool-stats-title" id="tool-stats-title">Full graph</p>
+
+      <dl class="tool-stats-list">
+        <div><dt>Nodes</dt><dd id="stat-nodes">—</dd></div>
+        <div><dt>Edges</dt><dd id="stat-edges">—</dd></div>
+        <div><dt>Density</dt><dd id="stat-density">—</dd></div>
+        <div><dt>Longest path</dt><dd id="stat-longest">—</dd></div>
+        <div><dt>Max fan-in</dt><dd id="stat-fan-in">—</dd></div>
+        <div><dt>Max fan-out</dt><dd id="stat-fan-out">—</dd></div>
+        <div><dt>Motivational ratio</dt><dd id="stat-motiv">—</dd></div>
+        <div><dt>Bottleneck candidates</dt><dd id="stat-bottlenecks">—</dd></div>
+      </dl>
+
+      <div class="tool-focus" id="tool-focus" hidden>
+        <p class="tool-focus-title" id="focus-title"></p>
+        <p class="tool-focus-desc" id="focus-desc"></p>
+        <p class="tool-focus-meta" id="focus-meta"></p>
+      </div>
+    </aside>
+  </section>
+
+  <h2>How the stats are computed</h2>
+
+  <ul>
+    <li><strong>Density</strong> — actual edges divided by the maximum possible directed edges, <code>|E| / (|V| · (|V|−1))</code>. A denser curriculum has more interdependencies per concept.</li>
+    <li><strong>Longest path</strong> — the greatest number of edges on any dependency chain. Topologically sorted DAG, so computed in linear time. Long chains signal fragile curricula: one missed link cascades.</li>
+    <li><strong>Fan-in / fan-out</strong> — maximum in-degree and out-degree across nodes. High-fan-in nodes are natural bottlenecks where many earlier concepts must land before progress continues.</li>
+    <li><strong>Motivational ratio</strong> — share of edges whose type is <em>motivational</em>. A curriculum with a low motivational ratio has many procedural and conceptual dependencies but few places where one concept answers the question another raises. This is where Harel's necessity principle would predict students experience "why are we doing this?"</li>
+    <li><strong>Bottleneck candidates</strong> — nodes with in-degree ≥ 3 <em>and</em> at least one outgoing motivational edge. The first condition identifies where many things converge; the second filters to places where that convergence matters for ongoing learning. This is a heuristic, not a validated measure — it exists to illustrate what P4 would try to make rigorous.</li>
+  </ul>
+
+  <h2>Why typed dependencies</h2>
+
+  <p>
+    Most prerequisite-chain research treats dependencies as homogeneous: A depends on B. But not every dependency has the same pedagogical consequence. A <em>conceptual</em> dependency (you can't understand eigenvectors without understanding vector spaces) is different from a <em>procedural</em> dependency (you can't compute an eigendecomposition without having practiced matrix multiplication), which is different from a <em>motivational</em> dependency (Google's PageRank algorithm is a reason to want to know what eigenvectors do), which is different from a <em>social</em> dependency (this concept was originally motivated by a problem in population biology that a classmate is already working on). The four-type grammar is a hypothesis: that distinguishing these produces graph features that predict student outcomes better than undifferentiated prerequisite graphs do. P4 is the project to test the hypothesis.
+  </p>
+
+  <p class="font-sans text-small text-muted mt-xl">
+    <a href="tools.html">← Back to Tools</a> · <a href="projects.html#p4">See Project P4</a> · Synthetic data. No student records involved.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
+</footer>
+
+<script src="script.js" defer></script>
+<script>
+// ============================================================
+// Curriculum Dependency Visualizer
+// Synthetic applied linear algebra curriculum
+// Pure SVG, no libraries, no build step
+// ============================================================
+
+(function () {
+  'use strict';
+
+  // --- Synthetic curriculum data ---------------------------------
+  // Each node is a learning objective. "layer" gives a rough
+  // topological position used for layout.
+  var NODES = [
+    { id: 'syslin',  label: 'Systems of linear equations', layer: 0,
+      desc: 'Why questions with many unknowns and many constraints need linear algebra at all — e.g., fitting a plane to data.' },
+    { id: 'vec',     label: 'Vectors & vector operations', layer: 0,
+      desc: 'Addition, scaling, dot product. Built from scratch as JavaScript arrays before any library call.' },
+    { id: 'matrix',  label: 'Matrices as transformations', layer: 1,
+      desc: 'Matrices introduced as functions from R^n to R^m, not as number grids. The function-first framing is the necessity hook.' },
+    { id: 'matmul',  label: 'Matrix multiplication', layer: 2,
+      desc: 'Composition of linear maps. Derived from the transformation view, not memorized as a rule.' },
+    { id: 'gauss',   label: 'Gaussian elimination', layer: 2,
+      desc: 'A procedure students implement themselves after they have personally failed to solve a 4x4 system by hand.' },
+    { id: 'rank',    label: 'Rank and linear independence', layer: 3,
+      desc: 'Why some systems have no solution and some have infinitely many — experienced before named.' },
+    { id: 'invert',  label: 'Matrix inversion', layer: 3,
+      desc: 'Introduced only after students have tried to undo a transformation and found that sometimes they cannot.' },
+    { id: 'lsq',     label: 'Least squares', layer: 4,
+      desc: 'The headache: fit a line to noisy data where no line hits every point. The answer is a projection.' },
+    { id: 'proj',    label: 'Orthogonal projection', layer: 4,
+      desc: 'Projection as the closest-point-in-subspace. Motivates least squares and PCA.' },
+    { id: 'basis',   label: 'Basis and change of basis', layer: 3,
+      desc: 'Coordinate systems as a choice, not a given. Same vector, different representations.' },
+    { id: 'det',     label: 'Determinants', layer: 3,
+      desc: 'Signed volume. Motivated by wanting to know whether a transformation flattens space.' },
+    { id: 'eig',     label: 'Eigenvalues & eigenvectors', layer: 4,
+      desc: 'Directions that a transformation stretches but does not rotate. The stability question.' },
+    { id: 'diag',    label: 'Diagonalization', layer: 5,
+      desc: 'Changing basis to make a transformation act coordinate-wise. Why it fails when it fails.' },
+    { id: 'svd',     label: 'Singular value decomposition', layer: 6,
+      desc: 'The eigendecomposition that always exists. The universal factorization.' },
+    { id: 'pca',     label: 'Principal component analysis', layer: 6,
+      desc: 'PCA as "SVD applied to centered data." A real dataset is the necessity hook.' },
+    { id: 'pagerank',label: 'PageRank', layer: 5,
+      desc: 'Google\'s original search-ranking algorithm. A dominant eigenvector computation on a real graph.' },
+    { id: 'markov',  label: 'Markov chains', layer: 4,
+      desc: 'Probabilistic transitions as matrix multiplication. Steady states as eigenvectors.' },
+    { id: 'norm',    label: 'Norms and distance', layer: 2,
+      desc: 'Size and closeness. A prerequisite for almost every application.' },
+    { id: 'linmap',  label: 'Linear maps & their properties', layer: 2,
+      desc: 'Formalization of the "matrix as function" view. Linearity as a constraint students feel before they name.' },
+    { id: 'nullsp',  label: 'Null space & column space', layer: 3,
+      desc: 'What a transformation kills and what it reaches. Geometric before algebraic.' },
+    { id: 'lincomb', label: 'Linear combinations & span', layer: 1,
+      desc: 'Span as the set of reachable vectors. Motivated by asking what a set of forces can produce.' },
+    { id: 'modapp',  label: 'Modeling with data (capstone)', layer: 7,
+      desc: 'Capstone project: model a real question with real data using the techniques built over the course.' }
+  ];
+
+  // Edge types: conceptual (C), procedural (P), motivational (M), social (S)
+  var EDGES = [
+    // Week 1-2 foundations
+    { from: 'syslin',  to: 'vec',     type: 'M' },
+    { from: 'vec',     to: 'lincomb', type: 'C' },
+    { from: 'vec',     to: 'norm',    type: 'C' },
+    { from: 'lincomb', to: 'matrix',  type: 'C' },
+    { from: 'vec',     to: 'matrix',  type: 'C' },
+    { from: 'matrix',  to: 'linmap',  type: 'C' },
+    { from: 'matrix',  to: 'matmul',  type: 'C' },
+    { from: 'matmul',  to: 'gauss',   type: 'P' },
+    { from: 'syslin',  to: 'gauss',   type: 'M' },
+    { from: 'gauss',   to: 'rank',    type: 'C' },
+    { from: 'gauss',   to: 'invert',  type: 'P' },
+    { from: 'matmul',  to: 'invert',  type: 'C' },
+    { from: 'linmap',  to: 'nullsp',  type: 'C' },
+    { from: 'rank',    to: 'nullsp',  type: 'C' },
+    { from: 'lincomb', to: 'basis',   type: 'C' },
+    { from: 'rank',    to: 'basis',   type: 'C' },
+    { from: 'matrix',  to: 'det',     type: 'C' },
+    { from: 'invert',  to: 'det',     type: 'C' },
+    { from: 'norm',    to: 'proj',    type: 'C' },
+    { from: 'basis',   to: 'proj',    type: 'C' },
+    { from: 'proj',    to: 'lsq',     type: 'C' },
+    { from: 'syslin',  to: 'lsq',     type: 'M' },
+    { from: 'basis',   to: 'eig',     type: 'C' },
+    { from: 'det',     to: 'eig',     type: 'P' },
+    { from: 'linmap',  to: 'eig',     type: 'C' },
+    { from: 'eig',     to: 'diag',    type: 'C' },
+    { from: 'basis',   to: 'diag',    type: 'C' },
+    { from: 'diag',    to: 'svd',     type: 'C' },
+    { from: 'proj',    to: 'svd',     type: 'C' },
+    { from: 'svd',     to: 'pca',     type: 'C' },
+    { from: 'lsq',     to: 'pca',     type: 'M' },
+    { from: 'eig',     to: 'markov',  type: 'C' },
+    { from: 'eig',     to: 'pagerank',type: 'C' },
+    { from: 'markov',  to: 'pagerank',type: 'M' },
+    { from: 'pca',     to: 'modapp',  type: 'M' },
+    { from: 'pagerank',to: 'modapp',  type: 'M' },
+    { from: 'lsq',     to: 'modapp',  type: 'S' },
+    { from: 'modapp',  to: 'modapp',  type: 'S' } // self-loop removed below
+  ];
+
+  // Drop the placeholder self-loop (parse safety — kept for readability above)
+  EDGES = EDGES.filter(function (e) { return e.from !== e.to; });
+
+  // --- Layout: layered, columns by layer, rows within layer ------
+  var WIDTH = 960, HEIGHT = 620;
+  var MARGIN_X = 70, MARGIN_Y = 50;
+  var layerCount = 0;
+  NODES.forEach(function (n) { if (n.layer > layerCount) layerCount = n.layer; });
+  layerCount += 1;
+
+  // group nodes by layer
+  var byLayer = {};
+  NODES.forEach(function (n) {
+    if (!byLayer[n.layer]) byLayer[n.layer] = [];
+    byLayer[n.layer].push(n);
+  });
+
+  var colWidth = (WIDTH - 2 * MARGIN_X) / Math.max(1, layerCount - 1);
+  Object.keys(byLayer).forEach(function (k) {
+    var layer = parseInt(k, 10);
+    var col = byLayer[k];
+    var rowHeight = (HEIGHT - 2 * MARGIN_Y) / Math.max(1, col.length);
+    col.forEach(function (n, i) {
+      n.x = MARGIN_X + layer * colWidth;
+      n.y = MARGIN_Y + (i + 0.5) * rowHeight;
+    });
+  });
+
+  var nodeById = {};
+  NODES.forEach(function (n) { nodeById[n.id] = n; });
+
+  // Drop edges whose endpoints vanished (defensive)
+  EDGES = EDGES.filter(function (e) { return nodeById[e.from] && nodeById[e.to]; });
+
+  // --- Structural statistics -------------------------------------
+  function inDegree(id)  { return EDGES.filter(function (e) { return e.to === id; }).length; }
+  function outDegree(id) { return EDGES.filter(function (e) { return e.from === id; }).length; }
+
+  function longestPath() {
+    // DAG longest path via topological order by layer
+    var dist = {};
+    NODES.forEach(function (n) { dist[n.id] = 0; });
+    var sorted = NODES.slice().sort(function (a, b) { return a.layer - b.layer; });
+    sorted.forEach(function (n) {
+      EDGES.forEach(function (e) {
+        if (e.from === n.id) {
+          if (dist[e.to] < dist[e.from] + 1) dist[e.to] = dist[e.from] + 1;
+        }
+      });
+    });
+    var maxd = 0;
+    Object.keys(dist).forEach(function (id) { if (dist[id] > maxd) maxd = dist[id]; });
+    return maxd;
+  }
+
+  function computeStats(scope) {
+    // scope: null for full graph, or an object {nodes:Set, edges:Array}
+    var nodes = scope ? Array.from(scope.nodes).map(function (id) { return nodeById[id]; }) : NODES;
+    var edges = scope ? scope.edges : EDGES;
+    var V = nodes.length, E = edges.length;
+    var maxPossible = V * (V - 1);
+    var density = maxPossible > 0 ? (E / maxPossible) : 0;
+
+    var inMap = {}, outMap = {};
+    nodes.forEach(function (n) { inMap[n.id] = 0; outMap[n.id] = 0; });
+    edges.forEach(function (e) {
+      if (inMap[e.to]  !== undefined) inMap[e.to] += 1;
+      if (outMap[e.from] !== undefined) outMap[e.from] += 1;
+    });
+    var maxIn = 0, maxOut = 0;
+    nodes.forEach(function (n) {
+      if (inMap[n.id] > maxIn) maxIn = inMap[n.id];
+      if (outMap[n.id] > maxOut) maxOut = outMap[n.id];
+    });
+
+    var motivCount = edges.filter(function (e) { return e.type === 'M'; }).length;
+    var motivRatio = E > 0 ? (motivCount / E) : 0;
+
+    // bottleneck candidates: in-degree ≥ 3 AND has at least one outgoing motivational edge
+    var bottlenecks = nodes.filter(function (n) {
+      if (inMap[n.id] < 3) return false;
+      return edges.some(function (e) { return e.from === n.id && e.type === 'M'; });
+    });
+
+    // longest path (on the scoped node set only)
+    var scopedIds = {};
+    nodes.forEach(function (n) { scopedIds[n.id] = true; });
+    var dist = {};
+    nodes.forEach(function (n) { dist[n.id] = 0; });
+    var sorted = nodes.slice().sort(function (a, b) { return a.layer - b.layer; });
+    sorted.forEach(function (n) {
+      edges.forEach(function (e) {
+        if (e.from === n.id && scopedIds[e.to]) {
+          if (dist[e.to] < dist[e.from] + 1) dist[e.to] = dist[e.from] + 1;
+        }
+      });
+    });
+    var longest = 0;
+    Object.keys(dist).forEach(function (id) { if (dist[id] > longest) longest = dist[id]; });
+
+    return {
+      V: V, E: E, density: density, longest: longest,
+      maxIn: maxIn, maxOut: maxOut, motivRatio: motivRatio,
+      bottlenecks: bottlenecks.map(function (n) { return n.label; })
+    };
+  }
+
+  function renderStats(s, title) {
+    document.getElementById('tool-stats-title').textContent = title;
+    document.getElementById('stat-nodes').textContent = s.V;
+    document.getElementById('stat-edges').textContent = s.E;
+    document.getElementById('stat-density').textContent = (s.density * 100).toFixed(1) + '%';
+    document.getElementById('stat-longest').textContent = s.longest + ' edges';
+    document.getElementById('stat-fan-in').textContent = s.maxIn;
+    document.getElementById('stat-fan-out').textContent = s.maxOut;
+    document.getElementById('stat-motiv').textContent = (s.motivRatio * 100).toFixed(0) + '%';
+    document.getElementById('stat-bottlenecks').textContent = s.bottlenecks.length
+      ? s.bottlenecks.join(' · ')
+      : 'none';
+  }
+
+  // --- Rendering -------------------------------------------------
+  var svg = document.getElementById('curriculum-graph');
+  var SVGNS = 'http://www.w3.org/2000/svg';
+
+  function createEl(name, attrs) {
+    var el = document.createElementNS(SVGNS, name);
+    Object.keys(attrs || {}).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+    return el;
+  }
+
+  // background (clickable to clear focus)
+  var bg = createEl('rect', {
+    x: 0, y: 0, width: WIDTH, height: HEIGHT,
+    fill: 'transparent', 'data-role': 'bg'
+  });
+  svg.appendChild(bg);
+
+  // draw edges as curved paths; group them so we can style via data-type
+  var edgesGroup = createEl('g', { 'class': 'edges' });
+  svg.appendChild(edgesGroup);
+
+  EDGES.forEach(function (e, idx) {
+    var a = nodeById[e.from], b = nodeById[e.to];
+    var dx = b.x - a.x, dy = b.y - a.y;
+    var mx = (a.x + b.x) / 2;
+    var my = (a.y + b.y) / 2 - Math.abs(dx) * 0.08 - 10;
+    var d = 'M ' + a.x + ' ' + a.y + ' Q ' + mx + ' ' + my + ' ' + b.x + ' ' + b.y;
+    var path = createEl('path', {
+      d: d,
+      'class': 'edge edge-' + e.type,
+      'data-from': e.from,
+      'data-to': e.to,
+      'data-type': e.type,
+      'marker-end': 'url(#arrow-' + e.type + ')',
+      fill: 'none'
+    });
+    edgesGroup.appendChild(path);
+  });
+
+  // arrow markers — one per edge type (so dark-mode colors flow through)
+  var defs = createEl('defs', {});
+  ['C','P','M','S'].forEach(function (t) {
+    var m = createEl('marker', {
+      id: 'arrow-' + t,
+      viewBox: '0 0 10 10',
+      refX: 9, refY: 5,
+      markerWidth: 7, markerHeight: 7,
+      orient: 'auto-start-reverse'
+    });
+    var poly = createEl('path', {
+      d: 'M 0 0 L 10 5 L 0 10 z',
+      'class': 'edge-arrow edge-arrow-' + t
+    });
+    m.appendChild(poly);
+    defs.appendChild(m);
+  });
+  svg.appendChild(defs);
+
+  // node group
+  var nodesGroup = createEl('g', { 'class': 'nodes' });
+  svg.appendChild(nodesGroup);
+
+  NODES.forEach(function (n) {
+    var g = createEl('g', {
+      'class': 'node',
+      'data-id': n.id,
+      transform: 'translate(' + n.x + ',' + n.y + ')',
+      tabindex: '0',
+      role: 'button',
+      'aria-label': n.label
+    });
+    var circle = createEl('circle', {
+      r: 18,
+      'class': 'node-circle',
+      cx: 0, cy: 0
+    });
+    var label = createEl('text', {
+      'class': 'node-label',
+      x: 0, y: 34,
+      'text-anchor': 'middle'
+    });
+    label.textContent = n.label;
+    g.appendChild(circle);
+    g.appendChild(label);
+    nodesGroup.appendChild(g);
+
+    g.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      focusNode(n.id);
+    });
+    g.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        focusNode(n.id);
+      }
+    });
+  });
+
+  bg.addEventListener('click', clearFocus);
+
+  // --- Focus behavior --------------------------------------------
+  var focusEl = document.getElementById('tool-focus');
+  var focusTitle = document.getElementById('focus-title');
+  var focusDesc = document.getElementById('focus-desc');
+  var focusMeta = document.getElementById('focus-meta');
+
+  function clearFocus() {
+    svg.classList.remove('has-focus');
+    [].forEach.call(svg.querySelectorAll('.node, .edge'), function (el) {
+      el.classList.remove('focus-primary');
+      el.classList.remove('focus-neighbor');
+      el.classList.remove('faded');
+    });
+    focusEl.hidden = true;
+    renderStats(computeStats(null), 'Full graph');
+  }
+
+  function focusNode(id) {
+    svg.classList.add('has-focus');
+    var primary = nodeById[id];
+
+    // find neighbors
+    var incoming = EDGES.filter(function (e) { return e.to === id; });
+    var outgoing = EDGES.filter(function (e) { return e.from === id; });
+    var neighborIds = new Set();
+    neighborIds.add(id);
+    incoming.forEach(function (e) { neighborIds.add(e.from); });
+    outgoing.forEach(function (e) { neighborIds.add(e.to); });
+
+    [].forEach.call(svg.querySelectorAll('.node'), function (g) {
+      var nid = g.getAttribute('data-id');
+      g.classList.remove('focus-primary', 'focus-neighbor', 'faded');
+      if (nid === id) g.classList.add('focus-primary');
+      else if (neighborIds.has(nid)) g.classList.add('focus-neighbor');
+      else g.classList.add('faded');
+    });
+
+    [].forEach.call(svg.querySelectorAll('.edge'), function (e) {
+      var from = e.getAttribute('data-from');
+      var to = e.getAttribute('data-to');
+      e.classList.remove('focus-primary', 'faded');
+      if (from === id || to === id) e.classList.add('focus-primary');
+      else e.classList.add('faded');
+    });
+
+    // focus-scoped stats: only primary + neighbors + their connecting edges
+    var scopedNodes = neighborIds;
+    var scopedEdges = EDGES.filter(function (e) {
+      return scopedNodes.has(e.from) && scopedNodes.has(e.to);
+    });
+    renderStats(computeStats({ nodes: scopedNodes, edges: scopedEdges }),
+                'Focus: ' + primary.label);
+
+    // description panel
+    focusEl.hidden = false;
+    focusTitle.textContent = primary.label;
+    focusDesc.textContent = primary.desc;
+    var typeNames = { C: 'conceptual', P: 'procedural', M: 'motivational', S: 'social' };
+    var inLines = incoming.map(function (e) {
+      return '← ' + nodeById[e.from].label + ' (' + typeNames[e.type] + ')';
+    });
+    var outLines = outgoing.map(function (e) {
+      return '→ ' + nodeById[e.to].label + ' (' + typeNames[e.type] + ')';
+    });
+    focusMeta.innerHTML = [].concat(inLines, outLines).join('<br>') || 'No dependencies.';
+  }
+
+  // initial render
+  renderStats(computeStats(null), 'Full graph');
+})();
+</script>
+
+<style>
+/* ---------- Tool-specific styles (scoped) ---------- */
+.tool-surface {
+  display: grid;
+  grid-template-columns: 180px 1fr 240px;
+  gap: var(--space-lg);
+  margin: var(--space-xl) 0 var(--space-2xl);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .tool-surface {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tool-legend {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  padding: var(--space-md);
+  border-radius: 2px;
+}
+
+.tool-legend-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.tool-legend-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tool-legend-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  line-height: 1.35;
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.legend-swatch--conceptual { border-top: 2px solid var(--color-accent); }
+.legend-swatch--procedural { border-top: 2px dashed var(--color-accent); }
+.legend-swatch--motivational { border-top: 2px solid #c97b3d; }
+.legend-swatch--social { border-top: 2px dotted #6a8f4a; }
+
+.tool-legend-hint {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.tool-graph-wrap {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border-light);
+  border-radius: 2px;
+  padding: var(--space-sm);
+  overflow: hidden;
+}
+
+#curriculum-graph {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.edge {
+  stroke-width: 1.5;
+  opacity: 0.65;
+  transition: opacity 0.15s, stroke-width 0.15s;
+}
+
+.edge-C { stroke: var(--color-accent); }
+.edge-P { stroke: var(--color-accent); stroke-dasharray: 5 3; }
+.edge-M { stroke: #c97b3d; stroke-width: 2; }
+.edge-S { stroke: #6a8f4a; stroke-dasharray: 1 4; stroke-width: 2; }
+
+.edge-arrow-C { fill: var(--color-accent); }
+.edge-arrow-P { fill: var(--color-accent); }
+.edge-arrow-M { fill: #c97b3d; }
+.edge-arrow-S { fill: #6a8f4a; }
+
+.node { cursor: pointer; }
+
+.node-circle {
+  fill: var(--color-card-bg);
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  transition: fill 0.15s, stroke-width 0.15s, r 0.15s;
+}
+
+.node:hover .node-circle,
+.node:focus .node-circle {
+  fill: var(--color-accent-soft);
+}
+
+.node:focus { outline: none; }
+.node:focus .node-circle {
+  stroke-width: 3;
+}
+
+.node-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  fill: var(--color-text);
+  pointer-events: none;
+}
+
+/* focus state */
+#curriculum-graph.has-focus .edge { opacity: 0.12; }
+#curriculum-graph.has-focus .edge.focus-primary { opacity: 1; stroke-width: 2.5; }
+#curriculum-graph.has-focus .node.faded { opacity: 0.2; }
+#curriculum-graph.has-focus .node.focus-neighbor .node-circle { stroke-width: 2.5; }
+#curriculum-graph.has-focus .node.focus-primary .node-circle {
+  fill: var(--color-accent);
+  stroke: var(--color-accent);
+  r: 22;
+}
+#curriculum-graph.has-focus .node.focus-primary .node-label {
+  font-weight: 600;
+}
+
+.tool-stats {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  border-left: 3px solid var(--color-accent);
+  padding: var(--space-md);
+  border-radius: 2px;
+}
+
+.tool-stats-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md);
+}
+
+.tool-stats-list {
+  margin: 0 0 var(--space-md);
+}
+
+.tool-stats-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--color-border-light);
+}
+
+.tool-stats-list > div:last-child { border-bottom: 0; }
+
+.tool-stats-list dt {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+}
+
+.tool-stats-list dd {
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  max-width: 60%;
+}
+
+.tool-focus {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.tool-focus-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 0.35rem;
+}
+
+.tool-focus-desc {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-sm);
+}
+
+.tool-focus-meta {
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+</style>
+
+</body>
+</html>
