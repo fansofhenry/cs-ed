@@ -5,15 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Writing — Henry Fan</title>
   <meta name="description" content="Research statement, teaching philosophy, annotated reading list, and working papers on structural equity, help-seeking, and physical computing in CS education.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/writing.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Writing — Henry Fan">
+  <meta property="og:description" content="Research statement, teaching philosophy, working papers, and a 30-entry annotated reading list on CS education research.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/writing.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writing — Henry Fan">
+  <meta name="twitter:description" content="Research statement, teaching philosophy, working papers, and a 30-entry annotated reading list on CS education research.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#2c4a6e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-name">Henry Fan</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
       <li><a href="research.html">Research</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="teaching.html">Teaching</a></li>
@@ -25,7 +44,7 @@
   </div>
 </nav>
 
-<main class="page-container">
+<main id="main" class="page-container">
   <div class="page-header">
     <p class="label">Writing</p>
     <h1>Statements, Papers, and Reading</h1>
@@ -106,9 +125,24 @@
     Key papers and books that shape this research program and curriculum practice. Annotations describe what each contributes to my thinking — not just what it says, but how it informs specific research questions and teaching decisions. The list is organized by intellectual lineage rather than chronology.
   </p>
 
+  <nav class="reading-index" aria-label="Reading list categories">
+    <strong>Jump to a category</strong>
+    <ol>
+      <li><a href="#foundations">STEM Departure &amp; Structural Equity</a></li>
+      <li><a href="#help-seeking">Learning Analytics &amp; Help-Seeking</a></li>
+      <li><a href="#constructionism">Constructionism &amp; Physical Computing</a></li>
+      <li><a href="#curriculum-design">Curriculum Design &amp; Necessity Principle</a></li>
+      <li><a href="#learning-science">Learning Science Frameworks</a></li>
+      <li><a href="#community-college">Community College Research</a></li>
+      <li><a href="#methods">CS Education Research Methods</a></li>
+      <li><a href="#ai">AI in CS Education</a></li>
+      <li><a href="#equity">Equity Frameworks &amp; Pedagogical Foundations</a></li>
+    </ol>
+  </nav>
+
   <!-- ---- CATEGORY 1: STEM DEPARTURE ---- -->
 
-  <h3>Foundations: STEM Departure and Structural Equity</h3>
+  <h3 id="foundations" class="reading-category">Foundations: STEM Departure and Structural Equity</h3>
 
   <div class="writing-item">
     <p class="writing-title">Seymour, E., &amp; Hunter, A.-B. (2019). <em>Talking About Leaving Revisited.</em> Springer.</p>
@@ -140,7 +174,7 @@
 
   <!-- ---- CATEGORY 2: HELP-SEEKING ---- -->
 
-  <h3>Learning Analytics and Help-Seeking</h3>
+  <h3 id="help-seeking" class="reading-category">Learning Analytics and Help-Seeking</h3>
 
   <div class="writing-item">
     <p class="writing-title">Karabenick, S. A., &amp; Berger, J.-L. (2013). Help seeking as a self-regulated learning strategy. In <em>Applications of Self-Regulated Learning.</em></p>
@@ -165,7 +199,7 @@
 
   <!-- ---- CATEGORY 3: CONSTRUCTIONISM ---- -->
 
-  <h3>Constructionism, Physical Computing, and Hands-On Learning</h3>
+  <h3 id="constructionism" class="reading-category">Constructionism, Physical Computing, and Hands-On Learning</h3>
 
   <div class="writing-item">
     <p class="writing-title">Papert, S. (1980). <em>Mindstorms: Children, Computers, and Powerful Ideas.</em> Basic Books.</p>
@@ -204,7 +238,7 @@
 
   <!-- ---- CATEGORY 4: CURRICULUM DESIGN ---- -->
 
-  <h3>Curriculum Design and the Necessity Principle</h3>
+  <h3 id="curriculum-design" class="reading-category">Curriculum Design and the Necessity Principle</h3>
 
   <div class="writing-item">
     <p class="writing-title">Harel, G. (1998). Two dual assertions: The first on learning and the second on teaching. <em>AMM, 105</em>(6).</p>
@@ -229,7 +263,7 @@
 
   <!-- ---- CATEGORY 5: LEARNING SCIENCE ---- -->
 
-  <h3>Learning Science Frameworks</h3>
+  <h3 id="learning-science" class="reading-category">Learning Science Frameworks</h3>
 
   <div class="writing-item">
     <p class="writing-title">Kolb, D. A. (1984). <em>Experiential Learning: Experience as the Source of Learning and Development.</em> Prentice Hall.</p>
@@ -275,7 +309,7 @@
 
   <!-- ---- CATEGORY 6: CC RESEARCH ---- -->
 
-  <h3>Community College Research</h3>
+  <h3 id="community-college" class="reading-category">Community College Research</h3>
 
   <div class="writing-item">
     <p class="writing-title">Bailey, T., Jaggars, S. S., &amp; Jenkins, D. (2015). <em>Redesigning America's Community Colleges: A Clearer Path to Student Success.</em> Harvard University Press.</p>
@@ -293,7 +327,7 @@
 
   <!-- ---- CATEGORY 7: CS ED METHODS ---- -->
 
-  <h3>CS Education Research Methods</h3>
+  <h3 id="methods" class="reading-category">CS Education Research Methods</h3>
 
   <div class="writing-item">
     <p class="writing-title">Fincher, S., &amp; Robins, A. (Eds.). (2019). <em>The Cambridge Handbook of Computing Education Research.</em> Cambridge University Press.</p>
@@ -318,7 +352,7 @@
 
   <!-- ---- CATEGORY 8: AI IN CS ED ---- -->
 
-  <h3>AI in CS Education</h3>
+  <h3 id="ai" class="reading-category">AI in CS Education</h3>
 
   <div class="writing-item">
     <p class="writing-title">Porter, L., &amp; Zingaro, D. (2024). <em>Learn AI-Assisted Python Programming.</em> Manning.</p>
@@ -336,7 +370,7 @@
 
   <!-- ---- CATEGORY 9: PEDAGOGICAL FOUNDATIONS ---- -->
 
-  <h3>Equity Frameworks and Pedagogical Foundations</h3>
+  <h3 id="equity" class="reading-category">Equity Frameworks and Pedagogical Foundations</h3>
 
   <div class="writing-item">
     <p class="writing-title">Freire, P. (1968/1970). <em>Pedagogy of the Oppressed.</em> Continuum.</p>
@@ -367,8 +401,10 @@
 </main>
 
 <footer class="site-footer">
-  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
 </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>

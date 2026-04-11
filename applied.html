@@ -5,17 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Applied Work — Henry Fan</title>
   <meta name="description" content="Research-informed product design: ProjectBridge, a project-based learning platform for community colleges.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/applied.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Applied Work — Henry Fan">
+  <meta property="og:description" content="ProjectBridge: a project-based learning platform for community colleges, grounded in the same structural equity principles as the research.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/applied.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Applied Work — Henry Fan">
+  <meta name="twitter:description" content="ProjectBridge: a project-based learning platform for community colleges, grounded in the same structural equity principles as the research.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#2c4a6e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-name">Henry Fan</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
       <li><a href="research.html">Research</a></li>
       <li><a href="projects.html">Projects</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
       <li><a href="writing.html">Writing</a></li>
       <li><a href="tools.html">Prototypes</a></li>
       <li><a href="background.html">Background</a></li>
@@ -24,7 +44,7 @@
   </div>
 </nav>
 
-<main class="page-container">
+<main id="main" class="page-container">
   <div class="page-header">
     <p class="label">Applied Work</p>
     <h1>Research-Informed Design</h1>
@@ -83,8 +103,10 @@
 </main>
 
 <footer class="site-footer">
-  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
 </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>

@@ -5,15 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teaching — Henry Fan</title>
   <meta name="description" content="Teaching philosophy, curriculum design, and course portfolio for introductory CS at California community colleges. Constructionism, productive failure, ungrading, and physical computing.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/teaching.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Curriculum Design — Henry Fan">
+  <meta property="og:description" content="Curriculum designs for community college CS: derive before compute, build before import, equity as design. Portfolio assessment, no exams.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/teaching.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Curriculum Design — Henry Fan">
+  <meta name="twitter:description" content="Curriculum designs for community college CS: derive before compute, build before import, equity as design. Portfolio assessment, no exams.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#2c4a6e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-name">Henry Fan</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
       <li><a href="research.html">Research</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="teaching.html" class="active">Teaching</a></li>
@@ -25,12 +44,12 @@
   </div>
 </nav>
 
-<main class="page-container">
+<main id="main" class="page-container">
   <div class="page-header">
-    <p class="label">Teaching</p>
+    <p class="label">Curriculum Design</p>
     <h1>Derive Before Compute</h1>
     <p class="subtitle">
-      I teach introductory CS at two California community colleges. The courses on this page are built on a single conviction: students learn CS best when they build real things, earn abstractions through struggle, and understand that every algorithm encodes a set of values about the world. No exams. No required textbooks. Every concept earned by building.
+      These are curriculum designs for introductory CS at California community colleges. They are built on a single conviction: students learn CS best when they build real things, earn abstractions through struggle, and understand that every algorithm encodes a set of values about the world. No exams. No required textbooks. Every concept earned by building.
     </p>
   </div>
 
@@ -41,14 +60,14 @@
   <h2>Teaching Philosophy</h2>
 
   <p>
-    Three principles, each grounded in research, each enacted in every course I teach:
+    Three principles, each grounded in research, each enacted in every course I design:
   </p>
 
   <div class="rq-block">
     <p class="rq-id">Principle 1</p>
     <p class="rq-title">Derive Before Compute</p>
     <p class="rq-text">
-      Every concept arrives as the answer to a question the student already owns. Formalism before need creates what Harel (1998) calls motivational debt — students memorize without understanding. In my courses, every module begins with a problem students can't yet solve, and the week's content is the tool that resolves it. Students experience the headache before receiving the medicine.
+      Every concept arrives as the answer to a question the student already owns. Formalism before need creates what Harel (1998) calls motivational debt — students memorize without understanding. In these designs, every module begins with a problem students can't yet solve, and the week's content is the tool that resolves it. Students experience the headache before receiving the medicine.
     </p>
   </div>
 
@@ -77,11 +96,11 @@
   <h2>Assessment Philosophy</h2>
 
   <p>
-    Following Jeff Anderson's (Foothill College) antiracist learning science framework and ungrading practice: timed exams measure anxiety and test-taking strategy, not understanding. They are strong predictors of racial and socioeconomic factors and weak predictors of genuine learning. My courses use portfolio-based assessment with student-proposed grades.
+    Following Jeff Anderson's (Foothill College) antiracist learning science framework and ungrading practice: timed exams measure anxiety and test-taking strategy, not understanding. They are strong predictors of racial and socioeconomic factors and weak predictors of genuine learning. These curriculum designs use portfolio-based assessment with student-proposed grades.
   </p>
 
   <p>
-    Every course has a public "List of Final Deliverables" visible from Day 1. Students know exactly what they need to produce and propose their own grades with evidence from their learning portfolio. Mid-term and final self-reflection activities structure metacognitive growth — learning how to learn is a technical outcome, not a soft skill.
+    Every course design includes a public "List of Final Deliverables" visible from Day 1. Students would know exactly what they need to produce and propose their own grades with evidence from a learning portfolio. Mid-term and final self-reflection activities structure metacognitive growth — learning how to learn is a technical outcome, not a soft skill.
   </p>
 
   <p>
@@ -96,20 +115,20 @@
 
   <h2>Signature Project</h2>
 
-  <div class="card" style="border-color:var(--color-accent);">
+  <div class="card card--highlight">
     <p class="card-label">20 Weeks · Team-Based · Cross-STEM · Completed Curriculum Design</p>
     <p class="card-title">Build a Computer from Scratch</p>
     <p class="card-desc">
       Teams of community college students build a working, programmable 8-bit computer on breadboards — starting from logic gates and ending with a machine that runs real programs. Inspired by Ben Eater's design. Grounded in seven bodies of learning science research: constructionism (Papert), productive failure (Kapur), experiential learning (Kolb), self-determination theory (Deci &amp; Ryan), transfer theory (Perkins &amp; Salomon), situated learning (Lave &amp; Wenger), and intellectual need (Harel).
     </p>
-    <p class="card-desc" style="margin-top:var(--space-sm);">
+    <p class="card-desc mt-sm">
       Every module includes an explicit "STEM Bridge Moment" where the instructor names the connection to physics, mathematics, linear algebra, differential equations, or chemistry — bridging from the breadboard to the student's next math or science course. High road transfer doesn't happen automatically; it must be designed for.
     </p>
-    <p class="card-desc" style="margin-top:var(--space-sm);">
+    <p class="card-desc mt-sm">
       Assessment: Build Journal (30%), Working Module (25%), Integration &amp; Debugging (20%), Public Exhibition (15%), Self-Evaluation (10%). No exams. The computer itself is the most honest assessment — it works or it doesn't.
     </p>
-    <p style="margin-top:var(--space-md);">
-      <a href="https://fansofhenry.github.io/teach_cs/build-a-computer.html" target="_blank">Open the full project page →</a>
+    <p class="mt-md">
+      <a href="https://fansofhenry.github.io/teach_cs/build-a-computer.html" target="_blank" rel="noopener">Open the full project page →</a>
     </p>
   </div>
 
@@ -126,13 +145,13 @@
   </p>
 
   <div class="writing-item">
-    <p class="writing-type">CS 180 · 3 Units · Currently Taught</p>
+    <p class="writing-type">CS 180 · 3 Units · Curriculum Design</p>
     <p class="writing-title">Introduction to Artificial Intelligence</p>
     <p class="writing-desc">Search, knowledge representation, planning, machine learning fundamentals, and the ethics of AI systems. Three tracks. Capstone: students build and critically evaluate a system that makes decisions about people.</p>
   </div>
 
   <div class="writing-item">
-    <p class="writing-type">CS 185 · 3 Units · Currently Taught</p>
+    <p class="writing-type">CS 185 · 3 Units · Curriculum Design</p>
     <p class="writing-title">Introduction to Machine Learning</p>
     <p class="writing-desc">Supervised and unsupervised learning, neural networks, bias auditing, and model interpretability. Every algorithm is a choice about what to optimize, and that choice has a politics. Capstone: bias audit of a production ML system.</p>
   </div>
@@ -150,19 +169,19 @@
   </div>
 
   <div class="writing-item">
-    <p class="writing-type">Math 2B · 3 Units · Currently Taught</p>
+    <p class="writing-type">Math 2B · 3 Units · Curriculum Design</p>
     <p class="writing-title">Applied Linear Algebra</p>
     <p class="writing-desc">Built on Jeff Anderson's ALAF textbook and twelve modeling criteria. Six fundamental problems. Twenty-nine lessons. Derive before compute — the math is useful the moment it's introduced.</p>
   </div>
 
   <div class="writing-item">
-    <p class="writing-type">ENGR 11 · 3 Units · Currently Taught</p>
+    <p class="writing-type">ENGR 11 · 3 Units · Curriculum Design</p>
     <p class="writing-title">Programming and Problem Solving in MATLAB</p>
     <p class="writing-desc">MATLAB the way engineers actually use it: model real circuits, understand IEEE 754 floating-point, learn why 0.1 + 0.2 ≠ 0.3 and what that means for the systems we trust with our lives.</p>
   </div>
 
-  <p style="font-size:0.88rem;margin-top:var(--space-lg);">
-    <a href="https://fansofhenry.github.io/teach_cs/" target="_blank">See the full curriculum site with weekly plans and project descriptions →</a>
+  <p class="mt-lg text-small">
+    <a href="https://fansofhenry.github.io/teach_cs/" target="_blank" rel="noopener">See the full curriculum site with weekly plans and project descriptions →</a>
   </p>
 
   <hr>
@@ -171,20 +190,20 @@
        CONNECTION TO RESEARCH
        ============================================ -->
 
-  <h2>Teaching as Research</h2>
+  <h2>Curriculum as Research</h2>
 
   <p>
-    I don't maintain separate identities as "researcher" and "instructor." Every course I teach is a potential research site, and every research finding reshapes the courses:
+    I don't maintain separate identities as "researcher" and "curriculum designer." Every course I design is a potential research site, and every research finding reshapes the designs:
   </p>
 
   <div class="writing-item">
     <p class="writing-title">The Build a Computer project is a research instrument.</p>
-    <p class="writing-desc">When this project is piloted, it creates a natural site for studying help-seeking behavior (Q1), belonging (P5), and the effects of physical computing on persistence (Q3). The build journal entries are a qualitative data source. The milestone completion patterns are a quantitative data source. The research and the teaching are the same activity.</p>
+    <p class="writing-desc">When this project is piloted, it creates a natural site for studying help-seeking behavior (Q1), belonging (P5), and the effects of physical computing on persistence (Q3). The build journal entries would be a qualitative data source. The milestone completion patterns would be a quantitative data source. The research and the curriculum are the same activity observed from different angles.</p>
   </div>
 
   <div class="writing-item">
-    <p class="writing-title">SyllabusAudit (P2) was born from my own syllabi.</p>
-    <p class="writing-desc">The annotation scheme for motivational debt began as a self-audit of my own course materials. I found violations of the necessity principle in my own syllabi — places where I introduced formalism before students had the headache. The research tool I'm building is a tool I already use on my own work.</p>
+    <p class="writing-title">SyllabusAudit (P2) was born from self-audit.</p>
+    <p class="writing-desc">The annotation scheme for motivational debt began as a self-audit of my own course materials. I found violations of the necessity principle in my own syllabi — places where I introduced formalism before students had the headache. The research tool I'm building is a tool I already use on my own drafts.</p>
   </div>
 
   <div class="writing-item">
@@ -202,7 +221,7 @@
 
   <p>The teaching practice on this page is built on the work of:</p>
 
-  <div class="detail-grid" style="margin-top:var(--space-md);">
+  <div class="detail-grid mt-md">
     <div>
       <dt>Jeff Anderson</dt>
       <dd>Antiracist learning science, ungrading, strategic deep learning, five learner-centered objectives. The foundational influence on everything I build as an instructor.</dd>
@@ -233,8 +252,10 @@
 </main>
 
 <footer class="site-footer">
-  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
 </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>

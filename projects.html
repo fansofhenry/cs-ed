@@ -5,15 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects — Henry Fan</title>
   <meta name="description" content="Five research projects in CS education: interview studies, NLP analysis of course materials, learning analytics, curriculum graph analysis, and belonging measurement.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/projects.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Projects — Henry Fan">
+  <meta property="og:description" content="Five research projects: Seymour & Hunter replication, SyllabusAudit NLP, HelpMap learning analytics, CurriculumGraph, and BelongingSignals.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/projects.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Projects — Henry Fan">
+  <meta name="twitter:description" content="Five research projects: Seymour & Hunter replication, SyllabusAudit NLP, HelpMap learning analytics, CurriculumGraph, and BelongingSignals.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#2c4a6e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-name">Henry Fan</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
       <li><a href="research.html">Research</a></li>
       <li><a href="projects.html" class="active">Projects</a></li>
       <li><a href="teaching.html">Teaching</a></li>
@@ -25,7 +44,7 @@
   </div>
 </nav>
 
-<main class="page-container">
+<main id="main" class="page-container">
   <div class="page-header">
     <p class="label">Research Projects</p>
     <h1>Five Projects, 2025–2027</h1>
@@ -35,10 +54,10 @@
   </div>
 
   <!-- ================================ P3 ================================ -->
-  <div id="p3" class="card" style="margin-top: var(--space-xl);">
+  <div id="p3" class="card mt-xl">
     <span class="status proposed">Proposed · Target ICER 2027</span>
     <span class="card-label">Qualitative Research · Interview Study · STEM Departure</span>
-    <p class="card-title" style="font-size: 1.3rem;">P3 · Why They Left: A Seymour &amp; Hunter Replication at Community Colleges</p>
+    <p class="card-title card-title--lg">P3 · Why They Left: A Seymour &amp; Hunter Replication at Community Colleges</p>
     <p class="card-desc">
       Seymour and Hunter documented that students who leave STEM are not academically weaker than those who stay — they leave for structural reasons: teaching quality, weed-out culture, help-seeking suppression, belonging. Their landmark studies were conducted at research universities. This project asks whether those findings replicate at community colleges, which serve a demographically different population within a different institutional structure.
     </p>
@@ -73,7 +92,7 @@
   <div id="p2" class="card">
     <span class="status in-progress">In Progress · Target Learning @ Scale 2027</span>
     <span class="card-label">NLP · Static Analysis · Instructional Design</span>
-    <p class="card-title" style="font-size: 1.3rem;">P2 · SyllabusAudit: NLP-Based Structural Analysis of CS Course Materials</p>
+    <p class="card-title card-title--lg">P2 · SyllabusAudit: NLP-Based Structural Analysis of CS Course Materials</p>
     <p class="card-desc">
       Can automated analysis of syllabi and assignment descriptions reliably identify structural features associated with poor student outcomes? This project builds a corpus of 100+ CS1/CS2 syllabi, develops an annotation schema grounded in Harel's necessity principle, and trains a lightweight NLP classifier on expert annotations. The validation question is central: can this match expert judgment with sufficient reliability?
     </p>
@@ -108,7 +127,7 @@
   <div id="p1" class="card">
     <span class="status proposed">Proposed · Target SIGCSE 2027</span>
     <span class="card-label">Learning Analytics · NLP · LMS Data</span>
-    <p class="card-title" style="font-size: 1.3rem;">P1 · HelpMap: Detecting Help-Seeking Suppression in Introductory CS</p>
+    <p class="card-title card-title--lg">P1 · HelpMap: Detecting Help-Seeking Suppression in Introductory CS</p>
     <p class="card-desc">
       What behavioral signals in LMS and discussion forum data predict whether students seek help when stuck — and do these signals differ by demographic group? This project builds a validated feature set for help-seeking suppression from Canvas logs and discussion forum data across intro CS sections at Foothill College and SJSU.
     </p>
@@ -137,7 +156,7 @@
   <div id="p4" class="card">
     <span class="status proposed">Proposed · Target SIGCSE 2027</span>
     <span class="card-label">Graph Theory · Curriculum Design · Tool Development</span>
-    <p class="card-title" style="font-size: 1.3rem;">P4 · CurriculumGraph: Mapping and Analyzing CS Dependency Structures</p>
+    <p class="card-title card-title--lg">P4 · CurriculumGraph: Mapping and Analyzing CS Dependency Structures</p>
     <p class="card-desc">
       A graph-based representation of CS curriculum structure, built as an annotation tool for instructors. Instructors annotate their curriculum with typed dependencies; the tool computes structural statistics (longest path, fan-in/fan-out, bottleneck detection). The empirical question is whether these structural features predict DFW rates — and whether community college curricula show different structural signatures than research university curricula.
     </p>
@@ -163,7 +182,7 @@
   <div id="p5" class="card">
     <span class="status proposed">Proposed · Target ICER 2027</span>
     <span class="card-label">Belonging · Course Design · Survey Methods</span>
-    <p class="card-title" style="font-size: 1.3rem;">P5 · BelongingSignals: Coding Course Materials for Structural Belonging Features</p>
+    <p class="card-title card-title--lg">P5 · BelongingSignals: Coding Course Materials for Structural Belonging Features</p>
     <p class="card-desc">
       Which observable features of introductory CS course design predict students' sense of belonging — and can those features be reliably coded from course materials alone? This project develops a coding scheme grounded in Walton &amp; Brady's belonging literature and Margolis &amp; Fisher's <em>Unlocking the Clubhouse</em>, applies it to CS1 materials, and validates coding against belonging survey data.
     </p>
@@ -195,14 +214,14 @@
     In parallel with the empirical research above, I design and teach curriculum that operationalizes the same structural equity principles. These are not separate from the research — they are the intervention side of the same question, and each is a potential research site.
   </p>
 
-  <div class="card" style="border-left:3px solid var(--color-accent);">
+  <div class="card card--accent">
     <p class="card-label">Curriculum Design · Constructionism · Completed</p>
     <p class="card-title">Build a Computer from Scratch: A 20-Week Cross-STEM Signature Project</p>
     <p class="card-desc">
       Teams of community college students build a working 8-bit breadboard computer from logic gates. Seven learning science frameworks. Explicit STEM bridges to physics, discrete math, linear algebra, differential equations, and chemistry. Three-track agency system. Portfolio assessment with student-proposed grades. Designed as both a curriculum and a future research site for studying the effects of physical computing on belonging, help-seeking, and persistence in introductory CS.
     </p>
-    <p style="margin-top:var(--space-sm);font-size:0.88rem;">
-      <a href="https://fansofhenry.github.io/teach_cs/build-a-computer.html" target="_blank">Full project page →</a> ·
+    <p class="mt-sm text-small">
+      <a href="https://fansofhenry.github.io/teach_cs/build-a-computer.html" target="_blank" rel="noopener">Full project page →</a> ·
       <a href="teaching.html">Teaching philosophy →</a>
     </p>
   </div>
@@ -213,7 +232,7 @@
     <p class="card-desc">
       A campus-wide platform where students discover, join, lead, and document meaningful projects. Includes project directory, collaborator marketplace, build journals, milestone tracking, weekly check-ins, and faculty dashboards. Designed with first-generation community college students as the primary user. Built with Next.js 14, TypeScript, Tailwind CSS, Supabase (PostgreSQL + Row Level Security). Deployed on Vercel.
     </p>
-    <p style="margin-top:var(--space-sm);font-size:0.88rem;">
+    <p class="mt-sm text-small">
       <a href="tools.html">Platform details →</a>
     </p>
   </div>
@@ -224,16 +243,18 @@
     <p class="card-desc">
       A complete curriculum framework: CS 180 (AI), CS 185 (ML), CS 210 (Data Structures), CS 175 (How Things Work), Math 2B (Linear Algebra), ENGR 11 (MATLAB). All courses: no exams, no required textbooks, portfolio assessment, three-track system, equity as design. Grounded in Papert, Ko, Anderson, Freire, hooks, Knuth, Noble, and Benjamin. Open-access.
     </p>
-    <p style="margin-top:var(--space-sm);font-size:0.88rem;">
-      <a href="https://fansofhenry.github.io/teach_cs/" target="_blank">Visit the curriculum site →</a> ·
+    <p class="mt-sm text-small">
+      <a href="https://fansofhenry.github.io/teach_cs/" target="_blank" rel="noopener">Visit the curriculum site →</a> ·
       <a href="teaching.html">Teaching philosophy →</a>
     </p>
   </div>
 </main>
 
 <footer class="site-footer">
-  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
 </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>

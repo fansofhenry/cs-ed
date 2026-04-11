@@ -5,15 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Research Agenda — Henry Fan</title>
   <meta name="description" content="Research agenda: structural equity in introductory CS education. Help-seeking, curriculum structure, STEM departure, and computational tools for instructional auditing.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/research.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Research Agenda — Henry Fan">
+  <meta property="og:description" content="Four research questions on structural equity in introductory CS: help-seeking, curriculum structure, STEM departure, and computational auditing.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/research.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Research Agenda — Henry Fan">
+  <meta name="twitter:description" content="Four research questions on structural equity in introductory CS: help-seeking, curriculum structure, STEM departure, and computational auditing.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#2c4a6e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-name">Henry Fan</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
       <li><a href="research.html" class="active">Research</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="teaching.html">Teaching</a></li>
@@ -25,7 +44,7 @@
   </div>
 </nav>
 
-<main class="page-container">
+<main id="main" class="page-container">
   <div class="page-header">
     <p class="label">Research Agenda</p>
     <h1>Four Questions, One Thread</h1>
@@ -149,19 +168,21 @@
   </p>
 
   <p>
-    Every course I design is a potential research site: the <a href="https://fansofhenry.github.io/teach_cs/build-a-computer.html" target="_blank">Build a Computer from Scratch</a> project creates a natural laboratory for studying help-seeking behavior (Q1), the effects of physical computing on belonging (Q3), and whether constructionist curriculum design measurably reduces the structural departure patterns that Seymour and Hunter documented (Q3). The build journal entries are qualitative data. The milestone completion patterns are quantitative data. The three-track system is a testable belonging intervention (P5). The research and the teaching are the same activity, observed from different angles.
+    Every course I design is a potential research site: the <a href="https://fansofhenry.github.io/teach_cs/build-a-computer.html" target="_blank" rel="noopener">Build a Computer from Scratch</a> project creates a natural laboratory for studying help-seeking behavior (Q1), the effects of physical computing on belonging (Q3), and whether constructionist curriculum design measurably reduces the structural departure patterns that Seymour and Hunter documented (Q3). The build journal entries are qualitative data. The milestone completion patterns are quantitative data. The three-track system is a testable belonging intervention (P5). The research and the teaching are the same activity, observed from different angles.
   </p>
 
   <p>
-    See the full <a href="https://fansofhenry.github.io/teach_cs/" target="_blank">curriculum site</a> for the enacted version of this research agenda.
+    See the full <a href="https://fansofhenry.github.io/teach_cs/" target="_blank" rel="noopener">curriculum site</a> for the enacted version of this research agenda.
   </p>
 
   <p class="font-sans text-small text-muted mt-xl">Last updated: March 2026</p>
 </main>
 
 <footer class="site-footer">
-  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
 </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>

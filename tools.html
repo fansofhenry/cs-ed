@@ -5,15 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prototypes — Henry Fan</title>
   <meta name="description" content="Proof-of-concept research tools: curriculum dependency visualization, pedagogical debt analysis, and minimum viable curriculum computation.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/tools.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Prototypes — Henry Fan">
+  <meta property="og:description" content="Proof-of-concept research tools: curriculum dependency visualization, pedagogical debt analysis, minimum viable curriculum.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/tools.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Prototypes — Henry Fan">
+  <meta name="twitter:description" content="Proof-of-concept research tools: curriculum dependency visualization, pedagogical debt analysis, minimum viable curriculum.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#2c4a6e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-name">Henry Fan</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
       <li><a href="research.html">Research</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="teaching.html">Teaching</a></li>
@@ -25,7 +44,7 @@
   </div>
 </nav>
 
-<main class="page-container">
+<main id="main" class="page-container">
   <div class="page-header">
     <p class="label">Prototype Tools</p>
     <h1>Proof-of-Concept Implementations</h1>
@@ -34,14 +53,14 @@
     </p>
   </div>
 
-  <p style="background: var(--color-bg-alt); border: 1px solid var(--color-border-light); padding: var(--space-lg); font-size: 0.92rem; margin-bottom: var(--space-2xl);">
+  <p class="callout">
     <strong>Important context:</strong> These prototypes use synthetic data and heuristic scoring. Validating the underlying constructs is the goal of projects <a href="projects.html#p2">P2</a> and <a href="projects.html#p4">P4</a>. The prototypes exist to make abstract ideas concrete — they illustrate <em>what</em> the research aims to measure, not <em>how well</em> it can be measured yet.
   </p>
 
   <!-- Tool 1 -->
   <div class="card">
     <span class="card-label">Prototype for Project P4 · Graph Visualization</span>
-    <p class="card-title" style="font-size: 1.2rem;">Curriculum Dependency Visualizer</p>
+    <p class="card-title card-title--md">Curriculum Dependency Visualizer</p>
     <p class="card-desc">
       An interactive graph representation of a synthetic introductory linear algebra curriculum using a typed dependency grammar. Each node is a learning objective; each edge encodes one of four dependency types (conceptual, procedural, motivational, social). The empirical question in P4 is whether real instructor-annotated graphs show structural patterns that predict student outcomes — this prototype shows what such a graph looks like and what structural statistics it produces.
     </p>
@@ -53,7 +72,7 @@
   <!-- Tool 2 -->
   <div class="card">
     <span class="card-label">Prototype for Project P2 · Text Analysis</span>
-    <p class="card-title" style="font-size: 1.2rem;">Pedagogical Debt Analyzer</p>
+    <p class="card-title card-title--md">Pedagogical Debt Analyzer</p>
     <p class="card-desc">
       A text-input tool that scores course descriptions and syllabus excerpts for motivational, scaffolding, and verification structure using heuristics grounded in Harel's necessity principle. Users paste course material and receive a structural analysis across four dimensions. These are heuristic scores based on keyword patterns and structural rules — P2 is the project to validate whether they correlate with expert annotation and student outcomes.
     </p>
@@ -65,7 +84,7 @@
   <!-- Tool 3 -->
   <div class="card">
     <span class="card-label">Prototype for Project P4 · Algorithm Visualization</span>
-    <p class="card-title" style="font-size: 1.2rem;">Minimum Viable Curriculum Visualizer</p>
+    <p class="card-title card-title--md">Minimum Viable Curriculum Visualizer</p>
     <p class="card-desc">
       A step-through visualization of a greedy approximation algorithm for the Minimum Viable Curriculum (MVC) problem on a synthetic curriculum graph. The key theoretical result: finding the optimal MVC is NP-complete (polynomial reduction from Set Cover). This visualizer illustrates the algorithm on a small example. The research question in P4 is whether MVC-distance — how far a real curriculum is from its minimum viable form — predicts student outcomes.
     </p>
@@ -114,22 +133,22 @@
 
   <h2>Platform Design</h2>
 
-  <div class="card" style="border-left:3px solid var(--color-accent);">
+  <div class="card card--accent">
     <p class="card-label">Next.js 14 · TypeScript · Supabase · Tailwind CSS · Deployed</p>
     <p class="card-title">ProjectBridge: A Project-Based Learning Platform for Community Colleges</p>
     <p class="card-desc">
       A campus-wide platform where students discover, join, lead, and document meaningful projects — turning their college experience into a portfolio of real work. Designed with first-generation community college students as the primary user.
     </p>
-    <p class="card-desc" style="margin-top:var(--space-sm);">
+    <p class="card-desc mt-sm">
       Core features: project directory with search and filtering, collaborator marketplace with wanted ads, build journals for public project documentation, milestone tracking with celebration moments, weekly check-in system, 30-day pulse check automation, student profiles with contribution history, faculty dashboards for class project oversight, and learning community pages for programs like MESA, Puente, and Umoja.
     </p>
-    <p class="card-desc" style="margin-top:var(--space-sm);">
+    <p class="card-desc mt-sm">
       Design principles: agency first (every interaction makes a student feel more capable), low floor/high ceiling (post a project in under 2 minutes, document a year-long initiative with milestones and portfolio artifacts), show the work (GitHub-inspired public timeline), and survive the semester (projects outlive their creators through the campus archive).
     </p>
-    <p class="card-desc" style="margin-top:var(--space-sm);">
+    <p class="card-desc mt-sm">
       Built with Next.js 14 (App Router), TypeScript, Tailwind CSS, and Supabase (PostgreSQL + Row Level Security). Mobile-first design. Complete database schema with 8 core models. Deployed on Vercel.
     </p>
-    <p style="margin-top:var(--space-md);font-size:0.88rem;">
+    <p class="mt-md text-small">
       Research grounding: the platform operationalizes the same structural equity principles that guide the empirical projects on this site. If sense of belonging is structural (Walton &amp; Brady) and can be designed into platforms (not just classrooms), then a platform that gives students agency, visibility, and community should measurably affect persistence. This is a testable claim.
     </p>
   </div>
@@ -138,8 +157,10 @@
 </main>
 
 <footer class="site-footer">
-  <p>© 2026 Henry Fan · SJSU McNair Scholar · Foothill College Science Learning Institute</p>
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
 </footer>
 
+  <script src="script.js" defer></script>
 </body>
 </html>
