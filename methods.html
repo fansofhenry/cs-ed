@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methods Appendix — Henry Fan</title>
+  <meta name="description" content="Worked research artifacts: annotation example, interview guide, Cohen's kappa calculation, power analysis, and threats to validity for the four-question research program.">
+  <link rel="canonical" href="https://fansofhenry.github.io/cs-ed/methods.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%23fafaf8%22%2F%3E%3Cpath%20d%3D%22M18%2014v36M46%2014v36M18%2032h28%22%20stroke%3D%22%232c4a6e%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henry Fan — CS Education Research">
+  <meta property="og:title" content="Methods Appendix — Henry Fan">
+  <meta property="og:description" content="Worked research artifacts: annotation example, interview guide, reliability calculation, power analysis, and threats to validity.">
+  <meta property="og:url" content="https://fansofhenry.github.io/cs-ed/methods.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Methods Appendix — Henry Fan">
+  <meta name="twitter:description" content="Worked research artifacts: annotation example, interview guide, reliability calculation, power analysis, and threats to validity.">
+
+  <meta name="author" content="Henry Fan">
+  <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Henry Fan</a>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="primary-nav" data-nav-toggle>☰</button>
+    <ul id="primary-nav" class="nav-links">
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="applied.html">Applied</a></li>
+      <li><a href="background.html">Background</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="page-container">
+  <div class="page-header">
+    <p class="label">Methods Appendix</p>
+    <h1>Worked research artifacts.</h1>
+    <p class="subtitle">
+      The research pages describe the four questions at the level of construct and hypothesis. This appendix is the layer below: the actual annotation schemas, interview-guide excerpts, reliability formulas, and power calculations that the projects would run. It exists because "I will measure X" and "here is the exact column I will compute, here is the unit, here is the analysis" are very different claims, and because a reader should be able to audit the second kind.
+    </p>
+  </div>
+
+  <nav aria-label="On this page" class="page-toc">
+    <p class="page-toc-title">On this page</p>
+    <ol>
+      <li><a href="#annotation">Worked annotation example — Tool 2 rubric on a real syllabus paragraph</a></li>
+      <li><a href="#interview">P3 interview guide — excerpt</a></li>
+      <li><a href="#kappa">Cohen's κ — a worked calculation</a></li>
+      <li><a href="#power">Power analysis for Q1 — how big does the sample need to be?</a></li>
+      <li><a href="#validity">Threats to validity, one project at a time</a></li>
+      <li><a href="#prereg">Pre-registration discipline</a></li>
+    </ol>
+  </nav>
+
+  <hr>
+
+  <h2 id="annotation">Worked annotation example — Tool 2 rubric on a real syllabus paragraph</h2>
+
+  <p>
+    The paragraph below is a lightly fictionalized composite of text I have seen in multiple CC intro-CS syllabi (the real ones are not public). The worked annotation shows exactly how a trained human annotator would score it against the four dimensions, alongside what the Tool-2 rule-based scorer currently returns. This is the artifact Q4's annotation study would produce 120 times.
+  </p>
+
+  <blockquote class="method-blockquote">
+    <p>
+      "CIS 22A is a demanding introduction to programming. Students will cover variables, control flow, functions, recursion, arrays, and file I/O. The course moves quickly; students are expected to keep up with readings and come to class prepared. This course is not for everyone — expect to work harder than in any prior course. Help is available upon request. Grades will be posted after each exam. No late work."
+    </p>
+  </blockquote>
+
+  <div class="method-annotation">
+    <div class="method-annot-row">
+      <p class="method-annot-dim">Motivational framing</p>
+      <p class="method-annot-score"><span class="method-annot-label">Human:</span> 18 / 100 &nbsp;·&nbsp; <span class="method-annot-label">Tool 2:</span> 24 / 100</p>
+      <p class="method-annot-why">
+        <strong>Why low.</strong> The text leads with "demanding" and "rigorous-adjacent" threat language, then immediately lists topics in "cover"-framing. No real problem or student experience is invoked before the technical content is named. Rules fired: <em>rigor-as-threat</em> (−8), <em>coverage framing</em> (−4), <em>definition-first</em> (−6). No positive rules fired. Human score penalizes "this course is not for everyone" an additional step beyond what the rule captures — that phrase functions simultaneously as motivational and belonging debt.
+      </p>
+    </div>
+
+    <div class="method-annot-row">
+      <p class="method-annot-dim">Scaffolding visibility</p>
+      <p class="method-annot-score"><span class="method-annot-label">Human:</span> 22 / 100 &nbsp;·&nbsp; <span class="method-annot-label">Tool 2:</span> 46 / 100</p>
+      <p class="method-annot-why">
+        <strong>Why the gap.</strong> "Help is available upon request" matches the <em>help vague</em> rule (−4), but the Tool-2 rubric does not currently penalize the absence of any named office hours, named tutoring center, or named study group. A human annotator reads the silence; the current rule set does not. This is a known limitation and exactly the kind of rule gap the Q4 study is designed to surface. Candidate rule extension: a <em>named-support-absent</em> rule that penalizes any syllabus with zero matches to the office-hours, tutoring-center, or peer-mentor regexes.
+      </p>
+    </div>
+
+    <div class="method-annot-row">
+      <p class="method-annot-dim">Verification structure</p>
+      <p class="method-annot-score"><span class="method-annot-label">Human:</span> 12 / 100 &nbsp;·&nbsp; <span class="method-annot-label">Tool 2:</span> 34 / 100</p>
+      <p class="method-annot-why">
+        <strong>Why the gap.</strong> "Grades will be posted" fires the <em>grade-opaque</em> rule (−3), and "No late work" fires the <em>no feedback loop</em> rule (−5). But the text contains no positive verification signals at all — no test cases, no worked examples, no self-check — and the current scorer does not penalize the complete absence of them, only the negative signals. Same failure mode as scaffolding: the rubric currently measures bad signals but not missing-good-signals. Candidate rule extension: a <em>no-verification-mentioned</em> baseline penalty.
+      </p>
+    </div>
+
+    <div class="method-annot-row">
+      <p class="method-annot-dim">Belonging signals</p>
+      <p class="method-annot-score"><span class="method-annot-label">Human:</span> 8 / 100 &nbsp;·&nbsp; <span class="method-annot-label">Tool 2:</span> 36 / 100</p>
+      <p class="method-annot-why">
+        <strong>Why low.</strong> "Not for everyone" fires the <em>gatekeeping</em> rule (−8). "Students are expected" fires the <em>impersonal register</em> rule (−4). The human annotator also weights the cumulative effect of multiple negative cues at zero positive signal — a pattern the current rule set treats additively rather than multiplicatively. The tool score is <em>less</em> negative than the human score because the rules have a neutral midpoint and the additive structure doesn't capture the gestalt. This is a measurement modeling question, not a rule question.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    The gap between the human scores and the rule-based scores on this paragraph is the quantity Q4 is trying to minimize on a real corpus. The three failure modes visible above — <em>missing-signal rules</em>, <em>cumulative negative weighting</em>, and <em>implicit register</em> — are each tractable to address in the next iteration of the rule set, and each would be iterated blind to the annotation data to avoid overfitting. The methods discipline this page exists to publicize is that those iterations happen on a held-out split, not on the test set.
+  </p>
+
+  <hr>
+
+  <h2 id="interview">P3 interview guide — excerpt</h2>
+
+  <p>
+    Full guide is ~40 min with warm-up, four content arcs, and a closing round-back. What follows is the content-arc excerpt that maps directly onto Seymour &amp; Hunter's departure-reason taxonomy, rewritten to elicit narrative rather than category endorsement. The discipline is: never name a category in the question, only invite the participant to describe events and relationships in their own terms, and let the coding happen offline on the transcript.
+  </p>
+
+  <div class="method-interview">
+    <p class="method-interview-arc">Arc 2 — the course experience (≈12 minutes)</p>
+    <ol class="method-interview-list">
+      <li><strong>Walk me through your first week in the course.</strong> <em>Probe:</em> what did you expect; what surprised you; what did the instructor say on the first day that stuck with you.</li>
+      <li><strong>Tell me about a time you got stuck on an assignment.</strong> <em>Probe:</em> what you tried; what you did next; whether you reached out to anyone; what it felt like to be stuck.</li>
+      <li><strong>If you did reach out for help — what made that possible?</strong> <em>Probe:</em> who was named in the syllabus as a help source; who did you actually go to; did anything about the way help was described make you more or less likely to use it.</li>
+      <li><strong>If you didn't reach out for help — can you describe what was happening around that decision?</strong> <em>Probe:</em> time; confidence; messages you'd received about what "good students" do; anything the instructor had said about how hard the course should feel.</li>
+      <li><strong>Was there a moment you thought "this isn't going to work"?</strong> <em>Probe:</em> what was happening that week; what you were telling yourself; who you talked to about it, if anyone.</li>
+      <li><strong>What would have had to be different for you to still be enrolled?</strong> <em>Probe:</em> scheduling; specific course-design elements; relationships; money; caregiving; advising; transfer-path friction.</li>
+    </ol>
+  </div>
+
+  <p>
+    Question 6 is deliberately open-ended because it is the question S&amp;H's instrument could not ask directly and because the CC-specific extensions — caregiving, stop-out, transfer-path fracture, advising-gap — emerge in the answers to it far more often than in direct questions about them. The coding rubric for this arc is a 14-code scheme: 7 S&amp;H-derived codes and 7 CC-specific candidate codes, double-coded by two trained coders, with disagreements adjudicated in consensus meetings. Codes and definitions are pre-registered before the interviews are transcribed.
+  </p>
+
+  <hr>
+
+  <h2 id="kappa">Cohen's κ — a worked calculation</h2>
+
+  <p>
+    Every reliability claim on the research page is a κ claim. Below is a worked calculation on synthetic data to show exactly what the number means and what would have to happen in the Q4 annotation study for the claim κ ≥ 0.65 to be true.
+  </p>
+
+  <p>
+    Suppose two annotators each score 60 syllabi on the <em>motivational framing</em> dimension using a 3-level collapsed rubric — <strong>healthy</strong>, <strong>mixed</strong>, <strong>debt</strong>. The confusion matrix looks like this:
+  </p>
+
+  <div class="method-table-wrap">
+    <table class="method-table">
+      <thead>
+        <tr><th></th><th>B: healthy</th><th>B: mixed</th><th>B: debt</th><th>Row sum</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>A: healthy</strong></td><td>14</td><td>3</td><td>1</td><td>18</td></tr>
+        <tr><td><strong>A: mixed</strong></td><td>4</td><td>16</td><td>2</td><td>22</td></tr>
+        <tr><td><strong>A: debt</strong></td><td>0</td><td>4</td><td>16</td><td>20</td></tr>
+        <tr><td><strong>Column sum</strong></td><td>18</td><td>23</td><td>19</td><td>60</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Observed agreement is the diagonal over the total: <code>p<sub>o</sub> = (14 + 16 + 16) / 60 = 46 / 60 = 0.767</code>. Expected agreement by chance is the sum of the product of the marginals for each category: for healthy, <code>(18/60) × (18/60) = 0.090</code>; for mixed, <code>(22/60) × (23/60) = 0.140</code>; for debt, <code>(20/60) × (19/60) = 0.106</code>. So <code>p<sub>e</sub> = 0.090 + 0.140 + 0.106 = 0.336</code>.
+  </p>
+
+  <p>
+    Cohen's κ is <code>(p<sub>o</sub> − p<sub>e</sub>) / (1 − p<sub>e</sub>) = (0.767 − 0.336) / (1 − 0.336) = 0.431 / 0.664 ≈ 0.649</code>. That is <em>just</em> below the 0.65 threshold — which is exactly what the number will do in a realistic first-round pass on a hard construct like motivational framing, and exactly why the annotation study is set up with a calibration round, a disagreement-resolution protocol, and a second coded batch before the reliability number is reported.
+  </p>
+
+  <p>
+    The specific discipline: if Round 1 comes back with κ = 0.649 on motivational framing, I do <em>not</em> adjust the rubric to match the pattern of disagreements in Round 1 (that inflates κ artificially). I look at the <em>cells</em> where disagreement clustered (in this table: A-mixed vs. B-healthy = 4 cases), pull those four syllabi, and adjudicate them in a consensus meeting with written rationale. Then I run Round 2 on a new held-out batch of syllabi using the adjudicated rubric, and that Round 2 κ is the number I report. If Round 2 stays below 0.65, the dimension is unreliable and I say so in print.
+  </p>
+
+  <hr>
+
+  <h2 id="power">Power analysis for Q1 — how big does the sample need to be?</h2>
+
+  <p>
+    Q1's hypothesis is that course-level pedagogical debt score predicts course-level help-seeking suppression rate with β ≥ 0.2 (standardized). The analysis is a multilevel regression with students nested in course-sections. To detect a standardized slope of 0.2 at α = 0.05 with power 0.8, ignoring clustering, the naïve calculation is:
+  </p>
+
+  <p>
+    <code>n ≈ ((z<sub>α/2</sub> + z<sub>β</sub>) / β)² × (1 − β²) ≈ ((1.96 + 0.84) / 0.2)² × 0.96 ≈ 188</code> course-section observations at the section level.
+  </p>
+
+  <p>
+    With clustering, the design effect is <code>1 + (n̄ − 1)ρ</code> where <code>n̄</code> is mean students per section and <code>ρ</code> is the intraclass correlation. If mean section size is 30 and ρ = 0.1, DE ≈ 3.9, so the effective sample-size inflation means we need ≈ 188 / (1/3.9) — wait, that's the wrong direction. For <em>section-level</em> predictors in a multilevel model, the relevant sample is the number of <em>sections</em>, not the number of students. That means 188 sections is the required number under the naïve calculation, which is plainly infeasible at a single community college. Two responses:
+  </p>
+
+  <ol class="method-ol">
+    <li>
+      <strong>Relax the effect size.</strong> The β ≥ 0.2 threshold is a defensible floor for a "worth reporting" structural effect but is tighter than the hypothesis strictly needs. Re-running at β ≥ 0.35 (a more realistic first-pass expectation for an observational behavioral index) requires ≈ 60 sections, which is tractable across two CC districts over two academic years.
+    </li>
+    <li>
+      <strong>Shift unit of analysis down.</strong> The alternative is to treat the unit of analysis as the individual student, with course-section as a random effect and the pedagogical debt score as a section-level covariate. In that formulation, the ≈ 1200-student target in the H1 statement is sufficient power for the within-section variance components that carry most of the information.
+    </li>
+  </ol>
+
+  <p>
+    The pre-registration will commit to the second framing and report the number of sections actually recruited, so that a reviewer can see the design effect and check whether the effective sample is honest. The power analysis script will be committed to the repository before data collection begins.
+  </p>
+
+  <hr>
+
+  <h2 id="validity">Threats to validity, one project at a time</h2>
+
+  <div class="method-threat">
+    <p class="method-threat-head">P1 — help-seeking suppression from LMS logs</p>
+    <ul>
+      <li><strong>Construct validity.</strong> "Stuck" is defined behaviorally (long idle stretch within an edit-fail cycle), but a student could be thinking productively, taking a break, or context-switching. Mitigation: validate the behavioral index against a qualitative sub-sample of 20 students who record weekly self-reports of when they felt stuck.</li>
+      <li><strong>Internal validity.</strong> Course-level pedagogical debt and help-seeking suppression are both downstream of instructor choice; the relationship could be confounded by instructor-level variables that are not in the model. Mitigation: instructor fixed effects where sample allows; failing that, explicit discussion in the limitations.</li>
+      <li><strong>External validity.</strong> Community colleges in California with LMS data sharing agreements are not a random sample of all CCs. Mitigation: report explicitly and avoid generalizing past the sample frame.</li>
+    </ul>
+  </div>
+
+  <div class="method-threat">
+    <p class="method-threat-head">P2 — pedagogical debt rule-scoring against expert annotation</p>
+    <ul>
+      <li><strong>Construct validity.</strong> The four dimensions are defensible but not exhaustive. A dimension we're missing could be carrying signal that the current rubric attributes elsewhere. Mitigation: invite annotators to flag a "something important that doesn't fit" category and analyze those flags as qualitative data.</li>
+      <li><strong>Measurement validity.</strong> The rules are keyword-based and therefore brittle to paraphrase. Mitigation: report rule-level recall on a held-out paraphrase test set alongside the primary κ.</li>
+      <li><strong>Circularity.</strong> The rules were designed by the same person who wrote this rubric. Mitigation: annotator training happens on a written rubric that does not reference the rules, and rule refinement happens blind to the held-out annotation data.</li>
+    </ul>
+  </div>
+
+  <div class="method-threat">
+    <p class="method-threat-head">P3 — interview replication of S&amp;H at community colleges</p>
+    <ul>
+      <li><strong>Selection bias.</strong> Students willing to be interviewed about leaving a CS course are probably not the same as students who quietly disappear. Mitigation: combine outreach through counseling services with direct recruitment from the course roster; report the ratio of recruited to contacted and the demographics of each.</li>
+      <li><strong>Interviewer effects.</strong> I am an employee of the Foothill–De Anza district (CVC-OEI Application Support) and my research mentor holds a faculty position at one of the two study sites. Either relationship could bias participant answers. Mitigation: explicit disclosure of the employment relationship during consent; where possible, recruitment and interviewing of participants at the second site (De Anza) handled by a co-investigator blind to my employment; double-coding of transcripts; flagging any transcripts with signs of social-desirability bias.</li>
+      <li><strong>Category imposition.</strong> Coding against the S&amp;H taxonomy risks forcing CC experiences into a 4YI-derived frame. Mitigation: double-code against the open CC-extension codebook; if the extensions carry ≥ 20% of the coded episodes, the published analysis uses the extended frame, not the original.</li>
+    </ul>
+  </div>
+
+  <div class="method-threat">
+    <p class="method-threat-head">P4 — MVC-distance as predictor of DFW</p>
+    <ul>
+      <li><strong>Annotation reliability.</strong> If instructors do not agree on what the learning objectives of a course are, or on which module teaches which objective, the graph is not measurable at all. This is the project's biggest risk and is the reason the κ ≥ 0.65 threshold is load-bearing in H2.</li>
+      <li><strong>Spurious correlation.</strong> Curricula that are farther from greedy-MVC may be farther because they are larger, older, or serve more transfer requirements — all of which also predict DFW for independent reasons. Mitigation: partial correlation with enrollment, program age, and transfer-requirement count as covariates.</li>
+      <li><strong>Greedy as baseline.</strong> Using a specific approximation algorithm as the reference point embeds an assumption that the "ideal" curriculum is the greedy one, which is not obvious. Mitigation: report the metric against both greedy and exhaustive-optimum on the annotated graphs, and discuss any divergence.</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <h2 id="prereg">Pre-registration discipline</h2>
+
+  <p>
+    Each of the four projects will be pre-registered on OSF before data collection begins. Pre-registration commits, in writing and with a public timestamp, to (a) the hypothesis, (b) the sample frame, (c) the analysis plan, (d) the exclusion rules, and (e) the decision rules that determine when a result counts as supporting or refuting the hypothesis. Any deviation from the pre-registered plan is reported in the paper as a deviation, labelled as exploratory rather than confirmatory, and justified.
+  </p>
+
+  <p>
+    Pre-registration is not a methods fetish. It is the specific discipline that lets a reader distinguish between "the hypothesis was confirmed" and "the data were analyzed until something significant emerged." In a research program whose substantive claims are about the <em>structural</em> causes of student departure — claims that have an obvious interpretation for policy and an obvious way to be rhetorically useful whether or not they are true — the weight of that distinction is exactly as heavy as the policy implication.
+  </p>
+
+  <p class="font-sans text-small text-muted mt-xl">
+    Last updated: April 2026. This page is active — worked examples will grow as projects move from design into fieldwork.
+  </p>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 Henry Fan · CS Education Research Portfolio</p>
+  <p class="footer-sub">All papers, code, and curriculum released open-source · <a href="https://github.com/fansofhenry/cs-ed">source on GitHub</a></p>
+</footer>
+
+<script src="script.js" defer></script>
+
+<style>
+/* Methods appendix — page-scoped styles */
+.page-toc {
+  margin: var(--space-xl) 0;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-bg-alt, #f3f1ec);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 2px;
+}
+.page-toc-title {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-xs);
+}
+.page-toc ol {
+  padding-left: 1.2em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+.page-toc li {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.method-blockquote {
+  margin: var(--space-md) 0;
+  padding: var(--space-md) var(--space-lg);
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-bg-alt, #f3f1ec);
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+.method-blockquote p { margin: 0; }
+
+.method-annotation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+.method-annot-row {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+}
+.method-annot-dim {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 0.2em;
+}
+.method-annot-score {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  margin: 0 0 var(--space-xs);
+  color: var(--color-text);
+}
+.method-annot-label {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  font-variant-numeric: normal;
+}
+.method-annot-why {
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.method-interview {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 4px;
+  background: var(--color-bg);
+}
+.method-interview-arc {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-sm);
+}
+.method-interview-list {
+  padding-left: 1.3em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.method-interview-list li {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.method-interview-list em {
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+  font-style: normal;
+}
+
+.method-table-wrap {
+  overflow-x: auto;
+  margin: var(--space-md) 0;
+}
+.method-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  background: var(--color-bg);
+}
+.method-table th, .method-table td {
+  padding: 0.5em 0.8em;
+  border: 1px solid var(--color-border);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.method-table th {
+  background: var(--color-bg-alt, #f3f1ec);
+  font-weight: 500;
+}
+.method-table td:first-child { text-align: left; }
+
+.method-ol {
+  padding-left: 1.3em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.method-ol li {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.method-threat {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+}
+.method-threat-head {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0 0 var(--space-xs);
+}
+.method-threat ul {
+  margin: 0;
+  padding-left: 1.3em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+.method-threat li {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+main code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--color-bg-alt, #f3f1ec);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+</style>
+</body>
+</html>

@@ -48,14 +48,14 @@
 <main id="main" class="page-container">
   <div class="page-header">
     <p class="label">Research Agenda</p>
-    <h1>Four Questions, One Thread</h1>
+    <h1>Four hypotheses about the structure of introductory CS.</h1>
     <p class="subtitle">
-      My research investigates structural features of introductory CS courses that predict whether students seek help, persist, and develop belonging — with a focus on community college students. The connecting thread is structural equity: the claim, grounded in Seymour and Hunter's work, that departure from STEM correlates with teaching quality and institutional design, not academic ability.
+      Seymour and Hunter's <em>Talking About Leaving Revisited</em> (2019) makes a finding that is usually quoted as a slogan and almost never treated as an empirical claim: students who leave STEM are not the ones who fail the coursework. Across 5,100+ interviews at 27 institutions, the measured departure predictors were teaching quality, weed-out culture, help-seeking suppression, and eroded belonging — not GPA or prior preparation. The four research questions below are the ones that finding forces you to ask if you take it seriously at a community college, where 45% of CS undergraduates begin and where the original study was never run. Each question resolves to a hypothesis with an observable quantity, a data source, and a way to be wrong.
     </p>
   </div>
 
-  <p>
-    I'm building toward a research program that combines qualitative methods (interview studies grounded in Seymour &amp; Hunter), quantitative learning analytics, and computational tool-building. These are early-stage questions — they need data, methods, and collaboration to answer well. The empirical projects designed to address them are described on the <a href="projects.html">projects page</a>.
+  <p class="callout">
+    <strong>Hypotheses, not slogans.</strong> Each question below states (a) a <em>construct</em>, (b) an <em>operationalization</em> (how I would measure it), (c) a <em>falsifiable prediction</em>, and (d) the <em>null</em> I would accept as a disconfirming outcome. The projects that address each question are detailed on the <a href="projects.html">projects page</a>; the measurement procedures are worked in the <a href="methods.html">methods appendix</a>.
   </p>
 
   <p class="font-sans text-small text-muted mt-md">
@@ -65,64 +65,92 @@
   <hr>
 
   <div class="rq-block">
-    <p class="rq-id">Question 1</p>
-    <p class="rq-title">Help-Seeking and Course Structure</p>
+    <p class="rq-id">Question 1 · Project <a href="projects.html#p1">P1</a></p>
+    <p class="rq-title">Do structural features of course design predict help-seeking suppression in LMS behavior?</p>
     <p class="rq-text">
-      What observable features of introductory CS course design — assignment framing, office hours culture, peer collaboration norms — predict whether students seek help when stuck? Do these predictors differ across demographic groups, and can they be measured from LMS and discussion forum data?
+      <strong>Construct.</strong> <em>Help-seeking suppression</em> — the behavioral pattern in which students who are objectively stuck (long edit-compile-fail cycles, rising error rates, declining progress) do <em>not</em> post in the discussion forum, attend office hours, or reach out on Slack. Predicted by Seymour &amp; Hunter to be structurally caused and by the Karabenick / Newman help-seeking literature to track feature-level design choices.
     </p>
-    <p class="rq-methods">Methods: Learning analytics · LMS log analysis · Qualitative coding (Seymour &amp; Hunter taxonomy)</p>
-    <p class="rq-methods">→ Addressed by <a href="projects.html#p1">Project P1: HelpMap</a></p>
+    <p class="rq-text">
+      <strong>Operationalization.</strong> A behavioral index built from LMS and discussion-forum logs: stuck-ratio = (long idle stretches within an edit-fail cycle) / (total idle stretches). Course-design features coded from syllabus, assignment prompts, and office-hours listings using the Tool-2 rubric (validated against P2). DFW outcomes from institutional records.
+    </p>
+    <p class="rq-text">
+      <strong>Hypothesis H1.</strong> In a sample of at least 6 CC CS course-sections with ≥1200 enrolled students, course-level pedagogical debt score (composite of the four Tool-2 dimensions) will positively predict course-level help-seeking suppression rate, controlling for enrollment, instructor, term, and student prior-grade covariates, with β ≥ 0.2 and p &lt; 0.05.
+    </p>
+    <p class="rq-text">
+      <strong>Disconfirming null.</strong> If the regression returns |β| &lt; 0.1 or p ≥ 0.1 on a pre-registered specification, I accept that the structural-feature hypothesis is not supported at this level of measurement and report the negative result.
+    </p>
+    <p class="rq-methods">Methods: learning analytics · LMS log mining · regression · pre-registration</p>
   </div>
 
   <div class="rq-block">
-    <p class="rq-id">Question 2</p>
-    <p class="rq-title">Curriculum Structure and Student Departure</p>
+    <p class="rq-id">Question 2 · Project <a href="projects.html#p4">P4</a></p>
+    <p class="rq-title">Does MVC-distance in an instructor-annotated curriculum graph predict DFW rates and persistence?</p>
     <p class="rq-text">
-      Can a graph-based representation of CS curriculum structure reveal which dependency patterns create avoidable confusion bottlenecks? Do community college CS curricula show structural features that research university curricula don't — and do those features predict DFW rates?
+      <strong>Construct.</strong> <em>MVC-distance</em> — the gap between a real curriculum and its greedy Minimum Viable Curriculum on the typed-dependency graph of learning objectives (see <a href="tool-mvc.html">Tool 3</a>). The research claim is that curricula farther from the greedy MVC carry "redundant load" that falls disproportionately on students with the least academic slack.
     </p>
-    <p class="rq-methods">Methods: Curriculum graph analysis · Institutional data · NLP analysis of syllabi</p>
-    <p class="rq-methods">→ Addressed by <a href="projects.html#p4">Project P4: CurriculumGraph</a></p>
+    <p class="rq-text">
+      <strong>Operationalization.</strong> Ten introductory CS course sequences at California community colleges, each annotated by two instructors blind to the other's annotations, against a fixed 60-item objectives vocabulary. MVC-distance = (number of course modules in current sequence) − (greedy-MVC module count on the annotated graph). Outcomes = section-level DFW rate and one-year persistence from institutional data.
+    </p>
+    <p class="rq-text">
+      <strong>Hypothesis H2.</strong> Across the 10 sequences, Spearman correlation between MVC-distance and DFW rate ≥ 0.45, and inter-annotator Cohen's κ on objective labels ≥ 0.65.
+    </p>
+    <p class="rq-text">
+      <strong>Disconfirming null.</strong> If |ρ| &lt; 0.2, or if κ falls below 0.55 (indicating the typed-dependency grammar is not reliably coded even by experts), I publish the negative result and retire MVC-distance as a candidate metric.
+    </p>
+    <p class="rq-methods">Methods: curriculum graph annotation · inter-rater reliability · institutional data matching</p>
   </div>
 
   <div class="rq-block">
-    <p class="rq-id">Question 3</p>
-    <p class="rq-title">Replicating Seymour &amp; Hunter at Community Colleges</p>
+    <p class="rq-id">Question 3 · Project <a href="projects.html#p3">P3</a></p>
+    <p class="rq-title">Do the Seymour &amp; Hunter departure categories replicate at community colleges, and what is missed?</p>
     <p class="rq-text">
-      Do the departure reasons documented in <em>Talking About Leaving Revisited</em> — teaching quality, weed-out culture, belonging, help-seeking suppression — replicate at community colleges? Are there CC-specific departure pathways not captured in the original taxonomy?
+      <strong>Construct.</strong> <em>Structural departure</em> — the claim that STEM attrition at 2-year institutions is driven, as it is at 4-year institutions, by teaching quality, weed-out culture, eroded belonging, and help-seeking suppression, rather than by aptitude. The CC-specific twist is what Seymour &amp; Hunter could not measure: transfer-path fracture, financial-stop-out, caregiving labor, and the interaction of those with course structure.
     </p>
-    <p class="rq-methods">Methods: Semi-structured interviews · Qualitative coding · Grounded theory · IRB study</p>
-    <p class="rq-methods">→ Addressed by <a href="projects.html#p3">Project P3: Why They Left</a></p>
+    <p class="rq-text">
+      <strong>Operationalization.</strong> Semi-structured interviews with 24–30 students who enrolled in an intro CS course at Foothill or De Anza in the 2024–2025 academic year and did not re-enroll in the subsequent CS course. Transcripts double-coded against the S&amp;H taxonomy plus a pre-registered set of CC-specific candidate categories (transfer-stop, caregiving-load, advising-gap). IRB submission Spring 2026, fieldwork Summer 2026.
+    </p>
+    <p class="rq-text">
+      <strong>Hypothesis H3.</strong> ≥ 70% of coded departure episodes map onto at least one S&amp;H category; additionally, ≥ 20% of episodes require at least one CC-specific category to be fully described. Inter-coder κ on the combined codebook ≥ 0.70.
+    </p>
+    <p class="rq-text">
+      <strong>Disconfirming null.</strong> If the S&amp;H taxonomy accounts for &lt;50% of episodes, or if the CC-specific extensions are not reliably coded, I revise the theoretical frame before publication rather than squeezing the data to fit.
+    </p>
+    <p class="rq-methods">Methods: semi-structured interviews · grounded theory · double coding · IRB-reviewed study</p>
   </div>
 
   <div class="rq-block">
-    <p class="rq-id">Question 4</p>
-    <p class="rq-title">Validating Computational Tools for Instructional Auditing</p>
+    <p class="rq-id">Question 4 · Project <a href="projects.html#p2">P2</a></p>
+    <p class="rq-title">Can rule-based text features reach expert-level reliability for detecting pedagogical debt in syllabi?</p>
     <p class="rq-text">
-      Can NLP-based analysis of course materials be validated as a reliable proxy for expert judgment about structural features associated with poor student outcomes — specifically features that suppress help-seeking or create what I'm tentatively calling "motivational debt"? This is fundamentally a validation question: can automated analysis match expert annotation with sufficient reliability (Cohen's κ ≥ 0.65) to be useful to instructors?
+      <strong>Construct.</strong> <em>Pedagogical debt</em> — a composite of motivational framing, scaffolding visibility, verification structure, and belonging signals, operationalized in <a href="tool-pedagogical-debt.html">Tool 2</a>. The research claim is that the construct is measurable from syllabus text alone at reliability high enough to be useful to instructors.
     </p>
-    <p class="rq-methods">Methods: NLP · Annotation studies · Tool validation · Instructional design literature</p>
-    <p class="rq-methods">→ Addressed by <a href="projects.html#p2">Project P2: SyllabusAudit</a></p>
+    <p class="rq-text">
+      <strong>Operationalization.</strong> A corpus of 120 introductory CS syllabi from California community colleges (IRB-cleared, public-domain where possible). Three trained annotators score each syllabus against a rubric derived from the Tool-2 rules. Rule-based Tool-2 scores compared against the mean human score per dimension.
+    </p>
+    <p class="rq-text">
+      <strong>Hypothesis H4.</strong> (a) Inter-annotator Cohen's κ ≥ 0.65 on each of the four dimensions. (b) Spearman correlation between the Tool-2 rule-based score and the mean human score ≥ 0.70 on each dimension. (c) Tool-2 scores, entered as a single composite, predict end-of-term student belonging scores (Walton &amp; Cohen instrument) in a 6-section subsample with β ≥ 0.15, p &lt; 0.05.
+    </p>
+    <p class="rq-text">
+      <strong>Disconfirming null.</strong> If any of the three reliability thresholds fail, the tool is not validated; I report which dimensions failed, what their rules looked like, and what the failure tells us about the measurability of the underlying construct.
+    </p>
+    <p class="rq-methods">Methods: annotation study · NLP rule evaluation · belonging-instrument administration</p>
   </div>
 
   <hr>
 
-  <h2>Key Ideas and Influences</h2>
+  <h2>What this program owes, and what it adds</h2>
 
   <p>
-    The constructs below draw on existing literature and, in some cases, propose extensions that need empirical validation. I list them here as intellectual commitments that shape the research questions above, not as established theory.
+    <strong>What it owes.</strong> Seymour &amp; Hunter (1997, 2019) for the finding this research program rests on. Harel (1998) for the necessity principle and the construct of intellectual need that motivates the pedagogical debt rubric. Walton &amp; Cohen (2007, 2011) and Walton &amp; Brady (2020) for the belonging-uncertainty framework. Margolis &amp; Fisher (2002) and Margolis (2008) for the documentation of how CS culture suppresses belonging in non-default students. Karabenick, Newman, and Ryan for the help-seeking literature. Anderson for the Math 2BL model of necessity-first instructional design that translates Harel from mathematics to computing. This program does not propose a new theory; it proposes a measurement stack that makes the existing theories testable in a community-college setting.
   </p>
 
-  <div class="detail-section">
-    <p><strong>Structural departure (Seymour &amp; Hunter, 1997; 2019).</strong> The landmark finding that students who leave STEM are not academically weaker than those who stay — departure correlates with teaching quality, institutional culture, and help-seeking suppression. This is the empirical foundation for the entire research program. The open question is whether these findings, established at research universities, replicate at community colleges (Q3).</p>
+  <p>
+    <strong>What it adds.</strong> Three things. First, the typed-dependency grammar and MVC-distance metric (Q2) are a new operationalization of curriculum structure that is computable, instructor-auditable, and falsifiable. Second, the pedagogical debt rubric (Q4) translates Harel's necessity principle and the belonging literature into rule-level features that can be evaluated against expert annotation — a thing that, to my knowledge, has not been done at the syllabus-corpus level. Third, the research site itself: the Seymour &amp; Hunter replication at California community colleges (Q3) is the first study I'm aware of that attempts to replicate TAL's structural-departure finding in a population where half of future STEM majors actually start.
+  </p>
 
-    <p><strong>The necessity principle (Harel, 1998; applied by Anderson).</strong> Students should experience intellectual need before receiving the tool that answers it. In Harel's formulation for mathematics education: "if math is the medicine, what is the headache?" I'm interested in whether violations of this principle — what I'm tentatively calling "pedagogical debt" by analogy with technical debt — are measurable from course materials and predictive of student outcomes (Q4).</p>
-
-    <p><strong>Belonging as structural feature (Walton &amp; Brady; Margolis &amp; Fisher).</strong> Sense of belonging in CS is not purely interpersonal — it can be signaled (or suppressed) by course design choices visible in materials alone. The question is whether these signals can be reliably coded and validated against student survey data (P5).</p>
-
-    <p><strong>Help-seeking suppression.</strong> The behavioral pattern in which students who need help do not seek it. Predicted by Seymour &amp; Hunter to be structurally caused. I'm interested in whether this can be operationalized as a measurable feature in LMS data (Q1).</p>
-
-    <p><strong>Curriculum graph analysis.</strong> Representing curriculum as a directed graph of learning objectives with typed dependencies (conceptual, procedural, motivational, social). The empirical question is whether structural properties of these graphs — density, longest paths, bottleneck nodes — predict student outcomes. This extends existing prerequisite-chain research by adding dependency types (Q2).</p>
-  </div>
+  <p>
+    <strong>What would make it wrong.</strong> If the instructor-annotated graphs in Q2 do not converge (κ &lt; 0.55), the typed-dependency grammar is too unreliable for the program to stand. If the Tool-2 rules in Q4 do not correlate with human annotation (ρ &lt; 0.5), the pedagogical debt construct is not measurable from text alone and the entire behavioral pipeline has to be re-grounded. If the Q3 interview study finds that S&amp;H categories account for fewer than half of departure episodes, the original theoretical frame is not the right frame for the population and the program's connecting thread has to be rewritten. Each of these is a live possibility and each has a place in the project design to be measured, not avoided.
+  </p>
 
   <hr>
 
@@ -132,7 +160,7 @@
     <div class="timeline-item">
       <p class="timeline-date">Now — Spring 2026</p>
       <p class="timeline-title">IRB Protocol + Corpus Construction</p>
-      <p class="timeline-desc">Submit IRB for P3 interview study. Continue collecting syllabi for P2 corpus (47/100+ collected). Develop annotation schema. PhD program applications.</p>
+      <p class="timeline-desc">Draft IRB materials for P3 interview study (Foothill / De Anza). Assemble public-syllabus seed corpus for P2 (target n = 120; collection continues through summer). Finalize annotation schema for both Q4 and Q2. Submit PhD program applications.</p>
     </div>
 
     <div class="timeline-item">
@@ -176,7 +204,7 @@
     See the full <a href="https://fansofhenry.github.io/teach_cs/" target="_blank" rel="noopener">curriculum site</a> for the enacted version of this research agenda.
   </p>
 
-  <p class="font-sans text-small text-muted mt-xl">Last updated: March 2026</p>
+  <p class="font-sans text-small text-muted mt-xl">Last updated: April 2026</p>
 </main>
 
 <footer class="site-footer">
