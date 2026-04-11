@@ -1,0 +1,15 @@
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Local preview servers
+.cache/
+node_modules/
+
+# Build artifacts
+*.zip
+*.tar.gz
+dist/
+build/
