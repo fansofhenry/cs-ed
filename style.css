@@ -17,7 +17,14 @@
   --color-border: #d8d6d0;
   --color-border-light: #e8e6e2;
   --color-white: #ffffff;
+  --color-card-bg: #ffffff;
   --color-focus: #3a6b9f;
+  --color-status-proposed-fg: #2c4a6e;
+  --color-status-proposed-bg: #e8eef5;
+  --color-status-in-progress-fg: #5a6e3a;
+  --color-status-in-progress-bg: #eef3e5;
+  --color-status-submitted-fg: #7a5a2e;
+  --color-status-submitted-bg: #f5f0e5;
   --font-serif: 'Newsreader', 'Georgia', serif;
   --font-sans: 'DM Sans', 'Helvetica Neue', sans-serif;
   --max-width: 720px;
@@ -29,6 +36,30 @@
   --space-xl: 2.5rem;
   --space-2xl: 4rem;
   --space-3xl: 6rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Warm editorial dark palette — WCAG AA tested against body/heading text */
+    --color-text: #ededea;
+    --color-text-secondary: #c0bfba;
+    --color-text-muted: #8f8e89;
+    --color-accent: #9cc2ee;
+    --color-accent-light: #badcff;
+    --color-accent-soft: #1a2535;
+    --color-bg: #14130f;
+    --color-bg-alt: #1c1b17;
+    --color-card-bg: #1a1915;
+    --color-border: #2f2d27;
+    --color-border-light: #26241f;
+    --color-focus: #badcff;
+    --color-status-proposed-fg: #badcff;
+    --color-status-proposed-bg: #1a2535;
+    --color-status-in-progress-fg: #c7dc9b;
+    --color-status-in-progress-bg: #202a15;
+    --color-status-submitted-fg: #e3c896;
+    --color-status-submitted-bg: #2a2318;
+  }
 }
 
 *, *::before, *::after {
@@ -339,7 +370,7 @@ hr {
 /* ---- Cards ---- */
 
 .card {
-  background: var(--color-white);
+  background: var(--color-card-bg);
   border: 1px solid var(--color-border);
   padding: var(--space-xl);
   margin-bottom: var(--space-lg);
@@ -395,18 +426,18 @@ hr {
 }
 
 .status.proposed {
-  color: var(--color-accent);
-  background: #e8eef5;
+  color: var(--color-status-proposed-fg);
+  background: var(--color-status-proposed-bg);
 }
 
 .status.in-progress {
-  color: #5a6e3a;
-  background: #eef3e5;
+  color: var(--color-status-in-progress-fg);
+  background: var(--color-status-in-progress-bg);
 }
 
 .status.submitted {
-  color: #7a5a2e;
-  background: #f5f0e5;
+  color: var(--color-status-submitted-fg);
+  background: var(--color-status-submitted-bg);
 }
 
 /* ---- Research question blocks ---- */
@@ -737,12 +768,14 @@ details .detail-content {
   border-color: var(--color-accent);
 }
 
-.card-title--lg {
-  font-size: 1.3rem !important;
+.card .card-title--lg,
+.card-title.card-title--lg {
+  font-size: 1.3rem;
 }
 
-.card-title--md {
-  font-size: 1.2rem !important;
+.card .card-title--md,
+.card-title.card-title--md {
+  font-size: 1.2rem;
 }
 
 .detail-grid--wide {
@@ -872,6 +905,85 @@ details .detail-content {
 }
 
 .reading-category {
+  scroll-margin-top: 5rem;
+}
+
+/* ---- Document status pill (used where a PDF link would otherwise go) ---- */
+
+.doc-status {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-style: normal;
+}
+
+.doc-status a {
+  color: var(--color-accent);
+}
+
+/* ---- Page-level table of contents ---- */
+
+.page-toc {
+  font-family: var(--font-sans);
+  font-size: 0.87rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border-light);
+  border-left: 3px solid var(--color-accent);
+  padding: var(--space-lg) var(--space-xl);
+  margin: var(--space-lg) 0 var(--space-2xl);
+}
+
+.page-toc-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.page-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.45rem 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .page-toc-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.page-toc-list li {
+  line-height: 1.4;
+}
+
+.page-toc-tag {
+  display: inline-block;
+  min-width: 2.25rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-right: 0.35rem;
+}
+
+.page-toc a {
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.page-toc a:hover,
+.page-toc a:focus-visible {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* Scroll margin so anchor jumps don't hide behind sticky nav */
+[id^="p"].card,
+.page-toc-target {
   scroll-margin-top: 5rem;
 }
 
